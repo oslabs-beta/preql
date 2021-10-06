@@ -1,18 +1,10 @@
-import React, { useState, useEffect, Component } from 'react';
-import InputRows from './InputRows.jsx'
+import React, { useState, useEffect, Component } from 'react'
 
 const UserInput = (props) => {
-
-
-  const fieldsArray = [];
-  let keyID = 0
-  props.fields.forEach((el) => {
-    fieldsArray.push(<InputRows field={el} key={++keyID}/>)
-  })
-
   return(
-    <div className="UserRows">
-      {fieldsArray}
+    <div className="UserInput">
+      {props.field}
+      <input></input>
     </div>
   )
 }
