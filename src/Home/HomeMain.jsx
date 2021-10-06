@@ -1,12 +1,13 @@
-import React, { useState, useEffect, Component} from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import InputRows from './InputRows.jsx';
 // import Connect from 'Connect';
 
 function Home() {
-  const [ fields, setFields ] = useState([
+  const [fields, setFields] = useState([
     ['Database Link']
   ]);
-  const [textField, setTextField] = useState('')
+  const [textField, setTextField] = useState('');
+  const [dataSet, setDataSet] = useState()
 
   function makeDBRequest(link) {
     fetch('/api/connect', {
@@ -14,23 +15,25 @@ function Home() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ link: link })
     })
-      .then(response => {
-        if (response.status === 200) {
-          setTextField(link);
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("HTTP status " + response.status);
         }
-        response.json()
+        return response.json();
       })
-      .then(data => {
-        // setTextField(data);
+      .then(function (data) {
+        //console.log(data)
+        setTextField(link);
+        setDataSet(data)
       })
-      .catch((error) => {
-        console.log('Error:', error)
+      .catch((err) => {
+        console.log('Error:', err)
       });
   }
 
   let fieldsArray = [];
   for (let i = 0; i < fields.length; i++) {
-    fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
+    fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest} />)
   }
 
   useEffect(() => {
@@ -38,14 +41,14 @@ function Home() {
   });
 
   if (!textField) {
-    return( //replaces "render"
+    return ( //replaces "render"
       <div className="homeContainer">
         <h1>"I Love Aki" - Adi</h1>
         {fieldsArray}
       </div>
     )
   } else {
-    return(
+    return (
       <div className="homeContainer">
         <h1>It's Working</h1>
         {textField}
