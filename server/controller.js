@@ -13,13 +13,12 @@ controller.test = async (req, res, next) => {
             status: 400,
             message: { err: "Error in test" },
           });
-    }  
+    }
 }
 
 controller.getTableNames = async (req, res, next) => {
     let PSQL_URI = req.body.link;
     let db = new Pool({ connectionString: PSQL_URI});
-    
     const GET_TABLE_QUERY = 'SELECT conrelid::regclass AS table_name\n'+
                             'FROM pg_constraint\n'+
                             'WHERE  contype = \'p\' AND connamespace = \'public\'::regnamespace';
@@ -37,7 +36,7 @@ controller.getTableNames = async (req, res, next) => {
             status: 400,
             message: { err: "Error in Get Table Names" },
           });
-    }  
+    }
 }
 
 
@@ -60,7 +59,7 @@ controller.getTableData = async (req, res, next) => {
             status: 400,
             message: { err: "Error in Get Table Data" },
           });
-    }  
+    }
 }
 
 

@@ -1,9 +1,49 @@
 body {
-  background-color: violet;
+  background-color: white;
+  margin: 0px;
 
   .Navbar {
+    background-color: rgba(94,23,235,255);
+    color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+
+    .links {
+
+      a {
+        font-family: 'Walter';
+        text-decoration: none;
+        color: white;
+        margin: 10px 50px 10px 10px;
+      }
+    }
+
+    .logo {
+      max-width: 200px;
+      margin: 10px 10px 10px 50px
+    }
+  }
+  .routes{
+    width: 50%;
+    align-content: center;
+    margin: auto;
+    .homeContainer{
+      h1{
+        text-align: center;
+      }
+      .InputRows {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        .UserInput {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+    .aboutContainer {
+      text-align: center;
+    }
   }
 }

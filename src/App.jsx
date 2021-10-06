@@ -3,15 +3,15 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Navbar from './navbar.jsx';
-import Home from './Home/main.jsx';
-import About from './About/main.jsx';
+import Home from './Home/HomeMain.jsx';
+import About from './About/AboutMain.jsx';
 
 const App = () => {
   return (
     <Router>
       <div>
         <Navbar />
-        <div className='pageLinks'>
+        <div className='routes'>
           <Switch>
             <Route exact path="/">
               <Home />
