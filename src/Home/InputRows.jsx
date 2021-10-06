@@ -2,11 +2,6 @@ import React, { useState, useEffect, Component } from 'react';
 import UserInput from './UserInput.jsx'
 
 const InputRows = (props) => {
-  const [textField, setTextField] = useState()
-
-  // useEffect(() => {
-
-  // }, [])
 
   const fieldsArray = [];
   let keyID = 0
