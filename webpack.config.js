@@ -52,13 +52,13 @@ module.exports = {
         extensions: [".js", ".jsx"],
     },
     devServer: {
-      static: {
-        directory: path.join(__dirname, '/'),
-        },
+      // static: {
+      //   directory: path.join(__dirname, '/'),
+      //   },
       proxy: {
         '/': 'http://localhost:3000'
       },
-      // publicPath: '/',
+      publicPath: '/',
       compress: true,
       port: 8080,
   },
