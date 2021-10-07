@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component} from 'react';
 import InputRows from './InputRows.jsx';
-// import Tables from './Tables.jsx'
+import Tables from './Tables.jsx'
+import TableSelector from './TableSelector.jsx'
 // import Connect from 'Connect';
 
 function Home() {
@@ -9,7 +10,8 @@ function Home() {
   ]);
   const [textField, setTextField] = useState(false);
   const [dataSet, setDataSet] = useState('');
-
+  const [displayData, setDisplayData] = useState();
+  
   function makeDBRequest(link) {
     fetch('/api/connect', {
       method: 'POST',
@@ -26,6 +28,7 @@ function Home() {
       .then(data => {
         setTextField(link);
         setDataSet(data);
+        setDisplayData(0);
       })
       .catch((error) => {
         console.log('Error:', error)
@@ -57,7 +60,8 @@ function Home() {
       <div className="homeContainer">
         <h1>It's Working</h1>
         {/* {dataObjects} */}
-        {<TableSelector dataSet={dataSet} />}
+        <TableSelector dataSet={dataSet} setDisplayData={setDisplayData}/> 
+        <Tables dataSet={dataSet[displayData]}/>
       </div>
     )
   }
