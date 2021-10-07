@@ -11,6 +11,7 @@ function Home() {
   const [textField, setTextField] = useState(false);
   const [dataSet, setDataSet] = useState('');
   const [displayData, setDisplayData] = useState();
+  const [tableNames, setTableNames] = useState('');
   
   function makeDBRequest(link) {
     fetch('/api/connect', {
@@ -27,7 +28,8 @@ function Home() {
       })
       .then(data => {
         setTextField(link);
-        setDataSet(data);
+        setDataSet(data['tableData']);
+        setTableNames(data['tableNames'])
         setDisplayData(0);
       })
       .catch((error) => {
