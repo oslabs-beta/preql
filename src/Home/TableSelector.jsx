@@ -18,9 +18,9 @@ const TableSelector = (props) => {
     }
   }
 
-  useEffect(() => {
-    // console.log(props.changeDataRender);
-  })
+  // useEffect(() => {
+  //   // console.log(props.changeDataRender);
+  // })
 
   return (
     <div className="tableSelector">
