@@ -42,6 +42,21 @@ body {
           flex-direction: column;
         }
       }
+      .tableSelector {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        //border: 2px solid rgba(94,23,235,255);
+        //border-radius: 10px;
+        margin-bottom: 15px;
+        .tableButtonSelectors {
+          //border-radius: 10px;
+          display: block;
+          width: 100%;
+          background-color: rgba(94,23,235,255);
+          color: white;
+        }
+      }
 
       table {
         display: flex;

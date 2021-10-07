@@ -7,8 +7,8 @@ const TableSelector = (props) => {
   if (props.dataSet) {
     for (let i = 0; i < props.dataSet.length; i++) {
       amountOfTables.push(
-        <button 
-          className="tableButtonSelectors" 
+        <button
+          className="tableButtonSelectors"
           key={i}
           onClick={() => props.changeDataRender(i)}
         >
@@ -17,12 +17,13 @@ const TableSelector = (props) => {
       )
     }
   }
+
   useEffect(() => {
     // console.log(props.changeDataRender);
-  }) 
+  })
 
   return (
-    <div className="tablesDiv">
+    <div className="tableSelector">
       {amountOfTables}
     </div>
   );
