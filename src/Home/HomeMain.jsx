@@ -1,27 +1,34 @@
 import React, { useState, useEffect, Component} from 'react';
 import InputRows from './InputRows.jsx';
+import Tables from './Tables.jsx'
+import TableSelector from './TableSelector.jsx'
 // import Connect from 'Connect';
 
 function Home() {
   const [ fields, setFields ] = useState([
     ['Database Link']
   ]);
-  const [textField, setTextField] = useState('')
-
+  const [textField, setTextField] = useState(false);
+  const [dataSet, setDataSet] = useState('');
+  const [displayData, setDisplayData] = useState();
+  
   function makeDBRequest(link) {
     fetch('/api/connect', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ link: link })
     })
-      .then(response => {
-        if (response.status === 200) {
-          setTextField(link);
-        }
-        response.json()
+      .then(function(response) {
+          console.log(response.status); // Will show you the status
+          if (!response.ok) {
+              throw new Error("HTTP status " + response.status);
+          }
+          return response.json();
       })
       .then(data => {
-        // setTextField(data);
+        setTextField(link);
+        setDataSet(data);
+        setDisplayData(0);
       })
       .catch((error) => {
         console.log('Error:', error)
@@ -33,11 +40,18 @@ function Home() {
     fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
   }
 
-  useEffect(() => {
-    console.log(textField, 'useEffect')
-  });
+  function changeDataRender(value) {
+    return setDisplayData(value);
+  }
+  // let dataObjects = []
+  // for (let i = 0; i < dataSet.length; i++) {
+  //   dataObjects.push(<Tables dataSet={dataSet} key={i}/>)
+  // // }
+  // useEffect(() => {
+  //   console.log(textField, 'useEffect')
+  // });
 
-  if (!textField) {
+  if (!dataSet) {
     return( //replaces "render"
       <div className="homeContainer">
         <h1>"I Love Aki" - Adi</h1>
@@ -45,13 +59,17 @@ function Home() {
       </div>
     )
   } else {
-    return(
+    return (
       <div className="homeContainer">
         <h1>It's Working</h1>
-        {textField}
+        {/* {dataObjects} */}
+        <TableSelector changeDataRender={changeDataRender} dataSet={dataSet} displayData={displayData} setDisplayData={setDisplayData}/>
+        <Tables dataSet={dataSet[displayData]} />
       </div>
-    )
+    );
   }
 }
+
+//Database link: postgres://yvngawyd:doVVLoInNgt8mSev6z8Y9TY1kVTIv3O2@chunee.db.elephantsql.com/yvngawyd
 
 export default Home

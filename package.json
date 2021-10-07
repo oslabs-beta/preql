@@ -11,7 +11,7 @@
     "babel-polyfill": "^6.26.0",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.3.2",
+    "html-webpack-plugin": "^1.1.0",
     "nodemon": "^2.0.13",
     "pg": "^8.7.1",
     "react": "^17.0.2",
@@ -22,13 +22,13 @@
     "request": "^2.79.0",
     "sass": "^1.42.1",
     "webpack": "^5.56.1",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-cli": "^4.8.0"
   },
   "devDependencies": {
     "css-loader": "^6.3.0",
     "sass-loader": "^12.1.0",
-    "style-loader": "^3.3.0"
+    "style-loader": "^3.3.0",
+    "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
     "start": "nodemon server/server.js",
