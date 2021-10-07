@@ -36,9 +36,24 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+        text-align: center;
         .UserInput {
           display: flex;
           flex-direction: column;
+        }
+      }
+
+      table {
+        display: flex;
+        flex-direction: column;
+        border-style: solid;
+        tr{
+          display: flex;
+          justify-content: space-between;
+        }
+        thead > tr > th{
+          border: solid black 1px;
+          width: auto;
         }
       }
     }
