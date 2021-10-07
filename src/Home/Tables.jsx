@@ -19,14 +19,34 @@ const Tables = (props) => {
       };
       for (let i = 0; i < dataObj.length; i++) {
         rowDataObj.push(
-            <tr key={`rowdata${i}`}>
-                {dataObj[i]}
-            </tr>
+          <tr key={`rowdata${i}`}>
+              {dataObj[i]}
+          </tr>
         )
       }; 
-  }
+  } 
 
-
+  /*REFACTOR SOLUTION FOR CODE ABOVE: 
+if (props.dataSet){
+    const columns = Object.keys(props.dataSet[0]);
+    columns.forEach(headers.push(<th key={i}>{columns[i]}</th>));
+    props.dataSet.reduce((acc, curr) => {
+      
+    })
+      for (let i = 0; i < props.dataSet.length; i++) {
+        dataObj.push([])
+        for (let key in props.dataSet[i]){
+            dataObj[i].push(<td key={`${key}${i}`}>{props.dataSet[i][key]}</td>)
+        }
+      };
+      for (let i = 0; i < dataObj.length; i++) {
+        rowDataObj.push(
+          <tr key={`rowdata${i}`}>
+              {dataObj[i]}
+          </tr>
+        )
+      }; 
+*/
 
   if(props.dataSet){
     return (

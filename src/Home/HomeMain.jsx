@@ -40,6 +40,9 @@ function Home() {
     fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
   }
 
+  function changeDataRender(value) {
+    return setDisplayData(value);
+  }
   // let dataObjects = []
   // for (let i = 0; i < dataSet.length; i++) {
   //   dataObjects.push(<Tables dataSet={dataSet} key={i}/>)
@@ -56,15 +59,17 @@ function Home() {
       </div>
     )
   } else {
-    return(
+    return (
       <div className="homeContainer">
         <h1>It's Working</h1>
         {/* {dataObjects} */}
-        <TableSelector dataSet={dataSet} setDisplayData={setDisplayData}/> 
-        <Tables dataSet={dataSet[displayData]}/>
+        <TableSelector changeDataRender={changeDataRender} dataSet={dataSet} displayData={displayData} setDisplayData={setDisplayData}/>
+        <Tables dataSet={dataSet[displayData]} />
       </div>
-    )
+    );
   }
 }
+
+//Database link: postgres://yvngawyd:doVVLoInNgt8mSev6z8Y9TY1kVTIv3O2@chunee.db.elephantsql.com/yvngawyd
 
 export default Home
