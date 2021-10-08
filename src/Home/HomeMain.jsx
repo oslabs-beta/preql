@@ -56,15 +56,21 @@ function Home() {
   } else {
     return (
       <div className="homeContainer">
-        <h1>Busting out the seams!!</h1>
+        <h1>Bussin' out the seams!!</h1>
         {/* {dataObjects} */}
-        <TableSelector changeDataRender={changeDataRender} dataSet={dataSet} displayData={displayData} setDisplayData={setDisplayData}/>
+        <TableSelector
+          changeDataRender={changeDataRender}
+          dataSet={dataSet}
+          displayData={displayData}
+          setDisplayData={setDisplayData}
+          tableNames={tableNames}
+          />
         <Tables dataSet={dataSet[displayData]} />
       </div>
     );
   }
 }
 
-//Database link: postgres://yvngawyd:doVVLoInNgt8mSev6z8Y9TY1kVTIv3O2@chunee.db.elephantsql.com/yvngawyd
+//Database link:
 
 export default Home
