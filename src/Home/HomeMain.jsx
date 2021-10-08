@@ -12,7 +12,7 @@ function Home() {
   const [dataSet, setDataSet] = useState('');
   const [displayData, setDisplayData] = useState();
   const [tableNames, setTableNames] = useState('');
-  
+
   function makeDBRequest(link) {
     fetch('/api/connect', {
       method: 'POST',
@@ -45,13 +45,6 @@ function Home() {
   function changeDataRender(value) {
     return setDisplayData(value);
   }
-  // let dataObjects = []
-  // for (let i = 0; i < dataSet.length; i++) {
-  //   dataObjects.push(<Tables dataSet={dataSet} key={i}/>)
-  // // }
-  // useEffect(() => {
-  //   console.log(textField, 'useEffect')
-  // });
 
   if (!dataSet) {
     return( //replaces "render"
@@ -63,15 +56,21 @@ function Home() {
   } else {
     return (
       <div className="homeContainer">
-        <h1>It's Working</h1>
+        <h1>Bussin' out the seams!!</h1>
         {/* {dataObjects} */}
-        <TableSelector changeDataRender={changeDataRender} dataSet={dataSet} displayData={displayData} setDisplayData={setDisplayData}/>
+        <TableSelector
+          changeDataRender={changeDataRender}
+          dataSet={dataSet}
+          displayData={displayData}
+          setDisplayData={setDisplayData}
+          tableNames={tableNames}
+          />
         <Tables dataSet={dataSet[displayData]} />
       </div>
     );
   }
 }
 
-//Database link: postgres://yvngawyd:doVVLoInNgt8mSev6z8Y9TY1kVTIv3O2@chunee.db.elephantsql.com/yvngawyd
+//Database link:
 
 export default Home

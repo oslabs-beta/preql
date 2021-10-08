@@ -6,23 +6,27 @@ const TableSelector = (props) => {
   const amountOfTables = []
   if (props.dataSet) {
     for (let i = 0; i < props.dataSet.length; i++) {
+      let title;
+      if (props.tableNames[i]) title = props.tableNames[i].toUpperCase();
       amountOfTables.push(
-        <button 
-          className="tableButtonSelectors" 
+        <button
+          className={props.displayData === i ? 'active' : 'tableButtonSelectors'}
           key={i}
-          onClick={() => props.changeDataRender(i)}
+          onClick={() => {props.changeDataRender(i)}}
+          // onClick={() => {props.changeDataRender(i); changeToActive() }}
         >
-          Table {i + 1}
+          {title}
         </button>
       )
     }
   }
-  useEffect(() => {
-    // console.log(props.changeDataRender);
-  }) 
+
+  // useEffect(() => {
+  //   // console.log(props.changeDataRender);
+  // })
 
   return (
-    <div className="tablesDiv">
+    <div className="tableSelector">
       {amountOfTables}
     </div>
   );
