@@ -1,6 +1,19 @@
 body {
-  background-color: white;
+  background-color: #EDE7E3;
   margin: 0px;
+
+  ::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+    color: rgba(94,23,235,255);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #8F8F8F;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+  background: #8955F1;
+}
 
   .Navbar {
     background-color: rgba(94,23,235,255);
@@ -25,10 +38,11 @@ body {
     }
   }
   .routes{
-    width: 50%;
+    width: 60%;
     align-content: center;
     margin: auto;
     .homeContainer{
+      //border: 2px solid rgba(94,23,235,255);
       h1{
         text-align: center;
       }
@@ -36,14 +50,79 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+        text-align: center;
         .UserInput {
           display: flex;
           flex-direction: column;
+        }
+      }
+      .tableSelector {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border: 3px solid rgba(94,23,235,255);
+        border-radius: 4px;
+        margin-bottom: 15px;
+        overflow-x: auto;
+        .tableButtonSelectors {
+          border: none;
+          display: block;
+          padding: 10px;
+          width: 100%;
+          background-color: #EDE7E3;
+          color: rgba(94,23,235,255);;
+          &:hover {
+            transition: 0.3s;
+            background-color: rgba(94,23,235,255);
+            color: #EDE7E3;
+            cursor: pointer;
+          }
+          
+        }
+        .active {
+          border: none;
+          display: block;
+          padding: 10px;
+          width: 100%;
+          background-color: rgba(94,23,235,255);
+          color: #EDE7E3;
+        }
+      }
+      .container {
+        display: flex;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        max-height: 400px;
+        table {
+          display: flex;
+          flex-direction: column;
+          border-style: solid;
+          tr{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+          
+          thead > tr > th{
+            background-color: #F7F4F3;
+            border: solid black 1px;
+            overflow-x: hidden;
+            width: 90px;
+          }
+          td {
+            background-color: #F7F4F3;
+            border: solid black 1px;
+            overflow-x: hidden;
+            width: 90px;
+            }
+          }
         }
       }
     }
     .aboutContainer {
       text-align: center;
     }
-  }
 }
+  // .active {
+  //   background-color: black;
+  // }
