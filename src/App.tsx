@@ -2,9 +2,9 @@ import React, { useState, useEffect, Component} from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Navbar from './navbar.jsx';
-import Home from './Home/HomeMain.jsx';
-import About from './About/AboutMain.jsx';
+import Navbar from './navbar';
+import Home from './Home/HomeMain';
+import About from './About/AboutMain';
 
 const App = () => {
   return (

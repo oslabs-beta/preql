@@ -2,20 +2,6 @@ const controller = {};
 const { Pool } = require('pg');
 
 
-controller.test = async (req, res, next) => {
-    try{
-        res.locals.test = "this works"
-        next();
-    }
-    catch (error) {
-        next({
-            log: "Error in test",
-            status: 400,
-            message: { err: "Error in test" },
-          });
-    }
-}
-
 controller.getTableNames = async (req, res, next) => {
     let PSQL_URI = req.body.link;
     let db = new Pool({ connectionString: PSQL_URI});
@@ -24,9 +10,9 @@ controller.getTableNames = async (req, res, next) => {
                             'WHERE  contype = \'p\' AND connamespace = \'public\'::regnamespace';
     try{
         const results = await db.query(GET_TABLE_QUERY);
-        res.locals.tables = [];
+        res.locals.tableNames = [];
         for (let i = 0; i < results.rows.length; i++){
-            res.locals.tables.push(results.rows[i]['table_name'])
+            res.locals.tableNames.push(results.rows[i]['table_name'])
         }
         next();
     }
@@ -44,13 +30,14 @@ controller.getTableData = async (req, res, next) => {
     let PSQL_URI = req.body.link;
     let db = new Pool({ connectionString: PSQL_URI});
 
-    res.locals.tablesData = []
+    res.locals.tableData = []
     let result;
     try{
-        for (let i = 0; i < res.locals.tables.length; i++){
-            result = await db.query('SELECT * FROM '+ res.locals.tables[i]);
-            res.locals.tablesData.push(result.rows);
+        for (let i = 0; i < res.locals.tableNames.length; i++){
+            result = await db.query('SELECT * FROM '+ res.locals.tableNames[i]);
+            res.locals.tableData.push(result.rows);
         }
+        res.locals.returnData = {'tableNames':res.locals.tableNames, 'tableData':res.locals.tableData}
         next();
     }
     catch (error) {

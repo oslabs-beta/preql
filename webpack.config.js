@@ -12,11 +12,17 @@ module.exports = {
     module: {
         rules: [
           {
+            test: /\.tsx?/,
+            use: 'ts-loader',
+            exclude: /node_modules/,
+          },
+          {
             test: /\.jsx?/,
             use: {
               loader: 'babel-loader',
               options: {
-                presets: ['@babel/preset-env', '@babel/preset-react']
+                presets: ['@babel/preset-env', '@babel/preset-react'],
+                plugins: ["@babel/plugin-syntax-jsx"]
               },
             },
             exclude: /npm_modules/
@@ -44,21 +50,24 @@ module.exports = {
                 }
               }
             ]
-          }
+          },
+          // {
+          //   test: /\.tsx?$/,
+          //   loader: 'babel-loader',
+          // },
         ]
     },
     resolve: {
         // Enable importing JS / JSX files without specifying their extension
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", ".tsx", ".ts"],
     },
     devServer: {
-      // static: {
-      //   directory: path.join(__dirname, '/'),
-      //   },
+      static: {
+        directory: path.join(__dirname, '/'),
+        },
       proxy: {
         '/': 'http://localhost:3000'
       },
-      publicPath: '/',
       compress: true,
       port: 8080,
   },
