@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Component} from 'react'
-import Tables from './Tables.jsx'
+// import Tables from './Tables'
 
-const TableSelector = (props) => {
+const TableSelector = (props: any) => {
 
   const amountOfTables = []
   if (props.dataSet) {
@@ -10,20 +10,15 @@ const TableSelector = (props) => {
       if (props.tableNames[i]) title = props.tableNames[i].toUpperCase();
       amountOfTables.push(
         <button
-          className={props.displayData === i ? 'active' : 'tableButtonSelectors'}
+          className={props.displayData[0] === i ? 'active' : 'tableButtonSelectors'}
           key={i}
           onClick={() => {props.changeDataRender(i)}}
-          // onClick={() => {props.changeDataRender(i); changeToActive() }}
         >
           {title}
         </button>
       )
     }
   }
-
-  // useEffect(() => {
-  //   // console.log(props.changeDataRender);
-  // })
 
   return (
     <div className="tableSelector">

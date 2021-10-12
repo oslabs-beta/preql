@@ -33,7 +33,7 @@ body {
     }
 
     .logo {
-      max-width: 200px;
+      max-width: 150px;
       margin: 10px 10px 10px 50px
     }
   }
@@ -77,7 +77,7 @@ body {
             color: #EDE7E3;
             cursor: pointer;
           }
-          
+
         }
         .active {
           border: none;
@@ -93,27 +93,49 @@ body {
         overflow-x: scroll;
         overflow-y: scroll;
         max-height: 400px;
+        margin-bottom: 50px;
         table {
           display: flex;
           flex-direction: column;
           border-style: solid;
+          width:100%;
           tr{
             display: flex;
             justify-content: space-between;
             width: 100%;
           }
-          
+
           thead > tr > th{
             background-color: #F7F4F3;
             border: solid black 1px;
             overflow-x: hidden;
-            width: 90px;
+            min-width: 100px;
+            width: 100%;
           }
           td {
             background-color: #F7F4F3;
             border: solid black 1px;
             overflow-x: hidden;
-            width: 90px;
+            overflow-y: hidden;
+            min-width: 100px;
+            width: 100%;
+            max-height: 150px
+            }
+          }
+        }
+        .queryGenerator{
+          .tableButtons{
+            display: flex;
+            justify-content: center;
+            margin: 15px;
+            .tableDropdown{
+              border: 2px solid rgba(94,23,235,255);
+              border-radius: 4px;
+              margin: 0px 15px;
+              }
+            .okayButton {
+              border: 2px solid rgba(94,23,235,255);
+              border-radius: 4px;
             }
           }
         }

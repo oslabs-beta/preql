@@ -1,16 +1,11 @@
-import React, { useState, useEffect, Component } from 'react';
-import UserInput from './UserInput.jsx'
+import React, { useState, useEffect, Component, FC } from 'react';
+import UserInput from './UserInput'
 
-const InputRows = (props) => {
-  const [textField, setTextField] = useState()
+const InputRows = (props: any) => {
 
-  // useEffect(() => {
-
-  // }, [])
-
-  const fieldsArray = [];
+  const fieldsArray: any = [];
   let keyID = 0
-  props.fields.forEach((el) => {
+  props.fields.forEach((el: any) => {
     fieldsArray.push(<UserInput field={el} key={++keyID} textField={props.textField} setTextField={props.setTextField} makeDBRequest={props.makeDBRequest}/>)
   })
 
