@@ -24,9 +24,14 @@
     "regenerator-runtime": "^0.13.9",
     "request": "^2.79.0",
     "sass": "^1.42.1",
+<<<<<<< HEAD
     "ts-loader": "^9.2.6",
     "webpack": "^5.58.1",
     "webpack-cli": "^4.9.0"
+=======
+    "webpack": "^5.56.1",
+    "webpack-cli": "^4.8.0"
+>>>>>>> dev
   },
   "devDependencies": {
     "@types/react-dom": "^17.0.9",
