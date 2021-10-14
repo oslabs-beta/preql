@@ -9,11 +9,14 @@ const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "..src/pictures")))
 //app.use("/about", (req, res) => res.status(200).send('ok'));
 if (process.env.NODE_ENV === "production") {
     app.use("/build", express.static(path.join(__dirname, "../build")));
 }
-else {    
+
+else {
     app.get("/", (req, res) => {
         return res.status(200).sendFile(path.join(__dirname, "../src/index.html"));
     });

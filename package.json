@@ -20,7 +20,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.3.0",
-    "react-select": "^5.0.0",
+    "react-select": "^5.1.0",
     "regenerator-runtime": "^0.13.9",
     "request": "^2.79.0",
     "sass": "^1.42.1",
@@ -35,6 +35,7 @@
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
     "typescript": "^4.4.3",
+    "url-loader": "^4.1.1",
     "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
