@@ -10,4 +10,10 @@ apiRouter.post('/connect',
         res.status(200).send(res.locals.returnData);
 });
 
+apiRouter.post('/join', 
+    controller.getJoinTable,
+    (req, res) => {
+        res.status(200).send(res.locals.returnJoinData);
+});
+
 module.exports = apiRouter;

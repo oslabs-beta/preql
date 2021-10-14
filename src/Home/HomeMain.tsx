@@ -53,7 +53,7 @@ function Home() {
 
   function changeDataRender(value: number, value2: number) {
     console.log(value, value2)
-    if (!value2) setDisplayData([value]);
+    if (!value2 && value2!=0) setDisplayData([value]);
     else if (value !== value2) setQueryDisplayData([value, value2]);
   }
 
