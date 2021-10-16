@@ -4,7 +4,6 @@ const Tables = (props: any) => {
   const headers = [];
   const dataObj = [];
   const rowDataObj = [];
-
   const table = props.dataSet[props.displayData[0]]
   const table2 = props.dataSet[props.displayData[1]]
 

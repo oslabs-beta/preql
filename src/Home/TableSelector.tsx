@@ -2,6 +2,7 @@ import React, { useEffect, useState, Component} from 'react'
 
 
 const TableSelector = (props: any) => {
+  const { changeDataRender } = props
 
   const amountOfTables = []
   if (props.dataSet) {
@@ -12,7 +13,7 @@ const TableSelector = (props: any) => {
         <button
           className={props.visualizerData[0] === i ? 'active' : 'tableButtonSelectors'}
           key={i}
-          onClick={() => {props.changeDataRender(true, i)}}
+          onClick={() => {changeDataRender(true, i)}}
         >
           {title}
         </button>
