@@ -16,12 +16,9 @@ function Home() {
   const [visualizerData, setVisualizerData] = useState<number[]>([0]);
   const [tableNames, setTableNames] = useState<string>(''); //this kind of syntax allows functionality of changing state all in one function
   const [queryDataSet, setQueryDataSet] = useState<string>('');
-  const [queryDisplayData, setQueryDisplayData] = useState<number[]>([]);
+  const [queryDisplayData, setQueryDisplayData] = useState<number[]>([null, null]);
 
   const [warning, setWarning] = useState<string>('')
-
-  //for mike
-  const[fireTruck, setFireTruck] = useState<string>('');
 
   function makeDBRequest(link: string) {
     fetch('/api/connect', {
@@ -52,13 +49,8 @@ function Home() {
     fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
   }
 
-<<<<<<< HEAD
-  function changeDataRender(value: number, value2: number) {
-    console.log(value, value2)
-    if (!value2 && value2!=0) setDisplayData([value]);
-    else if (value !== value2) setQueryDisplayData([value, value2]);
-=======
   function changeDataRender(visualizer: boolean, value: number, value2: number) {
+    console.log(queryDisplayData)
     //hello! this ternary is kinda confusing. its bascially saying that it if its not the visualizer table,
     // then change the other table instead, then check if they values are the same
     // if they are, then just print it once
@@ -66,8 +58,6 @@ function Home() {
     (value !== value2) ?
     setQueryDisplayData([value, value2]) :
     setQueryDisplayData([value, null])
-    // setWarning('mike')
->>>>>>> dev
   }
 
   if (!dataSet) {
@@ -105,9 +95,7 @@ function Home() {
           tableNames={tableNames} //tableNames is a useState - {tableNames} will invoke the func(invokes state)
           changeDataRender={changeDataRender}
           queryDataSet={queryDataSet}
-          // setQueryDataSet={queryDataSet}
           queryDisplayData={queryDisplayData}
-          // setQueryDisplayData={setQueryDisplayData}
         />
         <Tables
           changeDataRender={changeDataRender}

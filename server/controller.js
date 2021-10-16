@@ -91,7 +91,7 @@ controller.getJoinTable = async (req, res, next) => {
         dfJoin = dfOne.join(dfTwo, 'merge', joinHow.toLowerCase());
         dfJoin = dfJoin.drop('merge')
         if (columns[0]) dfJoin = dfJoin.restructure(columns);
-        console.log("Join ", dfJoin.toCollection());
+        res.locals.returnJoinData = dfJoin.toCollection();
 
 
         next();
