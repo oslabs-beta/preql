@@ -1,0 +1,5 @@
+{
+  "editor.fontFamily": "Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": null,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
