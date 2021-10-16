@@ -52,12 +52,6 @@ function Home() {
     fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
   }
 
-<<<<<<< HEAD
-  function changeDataRender(value: number, value2: number) {
-    console.log(value, value2)
-    if (!value2 && value2!=0) setDisplayData([value]);
-    else if (value !== value2) setQueryDisplayData([value, value2]);
-=======
   function changeDataRender(visualizer: boolean, value: number, value2: number) {
     //hello! this ternary is kinda confusing. its bascially saying that it if its not the visualizer table,
     // then change the other table instead, then check if they values are the same
@@ -67,7 +61,6 @@ function Home() {
     setQueryDisplayData([value, value2]) :
     setQueryDisplayData([value, null])
     // setWarning('mike')
->>>>>>> dev
   }
 
   if (!dataSet) {
