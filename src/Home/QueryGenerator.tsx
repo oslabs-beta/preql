@@ -9,15 +9,27 @@ function QueryGenerator(props: any) {
   const [tableTargets, setTableTargets] = useState<number[]>([null, null])
   const [tables, setTables] = useState<string[]>(['', ''])
   const [searchField, setSearchField] = useState<any[]>([[], []])
+
   const [onCondition, setOnCondition] = useState<string[]>(['',''])
   const [joinCondition, setJoinCondition] = useState<string>('') //default will always be inner
   const [selectCondition, setSelectCondition] = useState<string[]>([])
 
   const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
 
+  type arrayOfArrays = [string[], string[]] // will have strings within those arrays
+  type stringArray = [string?, string?]
+
+  interface databaseConnection {
+    tables: arrayOfArrays;
+    on: string[];
+    how: string;
+    columns?: string[]
+    tableNames: stringArray;
+  }
+
   const JOIN: string[] = ['INNER', 'LEFT', 'RIGHT', 'OUTER'];
   const joinOptions: any = [];
-  
+
   for (let i = 0; i < JOIN.length; i++) {
     let joinType = JOIN[i];
     joinOptions.push(
@@ -25,7 +37,7 @@ function QueryGenerator(props: any) {
     )
   }
 
-  // function autoCompleteBox() {
+
 
   let listOfOptions = [];
   let onOptions=[];
@@ -61,7 +73,7 @@ function QueryGenerator(props: any) {
         <button className="okayButton" onClick={() => {
           console.log(tableTargets)
           if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) setGenerateSearchField(true);
-          else setGenerateSearchField(false)
+          // else setGenerateSearchField(false)
         }}>ok</button>
       </div>
       { generateSearchField ?
@@ -99,21 +111,19 @@ function QueryGenerator(props: any) {
         <div>
           <button className="generateButton" onClick={() => {
             // changeDataRender(false, tableTargets[0], tableTargets[1])
-            const reqBody = {
+            const reqBody:databaseConnection = {
               //array or arrays
               tables: [queryDataSet[tableTargets[0]], queryDataSet[tableTargets[1]]],
-              //array of strings of length 2 
+              //array of strings of length 2
               on: onCondition,
               //string not empty and 'INNER', 'LEFT', 'RIGHT', 'OUTER'
               how: joinCondition,
               //array of strings or empty array
               columns: selectCondition,
-              //array of strings of length 2 
+              //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
-            console.log(reqBody)
-          }
-          }>Generate</button>
+          }}>Generate</button>
         </div>
       </div>
         : null

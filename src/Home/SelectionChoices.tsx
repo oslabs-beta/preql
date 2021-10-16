@@ -15,7 +15,6 @@ const SelectionChoices = (props: any) => {
   return (
       <div className="tableButtons">
         <select className="tableDropdown" onChange={(ev) => {
-            setGenerateSearchField(false);
             const nameOfTable = ev.target.value;
             const index = ev.target.selectedIndex;
             //the table we create is always one length longer than the one we are comparing too
