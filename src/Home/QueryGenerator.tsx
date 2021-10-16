@@ -100,10 +100,15 @@ function QueryGenerator(props: any) {
           <button className="generateButton" onClick={() => {
             // changeDataRender(false, tableTargets[0], tableTargets[1])
             const reqBody = {
+              //array or arrays
               tables: [queryDataSet[tableTargets[0]], queryDataSet[tableTargets[1]]],
+              //array of strings of length 2 
               on: onCondition,
+              //string not empty and 'INNER', 'LEFT', 'RIGHT', 'OUTER'
               how: joinCondition,
+              //array of strings or empty array
               columns: selectCondition,
+              //array of strings of length 2 
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
             console.log(reqBody)
