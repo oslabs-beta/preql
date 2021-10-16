@@ -137,6 +137,7 @@ body {
           }
         }
         .queryGenerator{
+          flex-wrap: wrap;
           .tableButtons{
             display: flex;
             justify-content: center;
