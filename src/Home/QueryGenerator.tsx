@@ -4,7 +4,7 @@ import Select from 'react-select';
 import SelectButton from './SelectButtons';
 
 function QueryGenerator(props: any) {
-  const { queryDataSet, tableNames, changeDataRender} = props;
+  const { queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
   const [tableTargets, setTableTargets] = useState<number[]>([null, null])
   const [tables, setTables] = useState<string[]>(['', ''])
@@ -15,6 +15,28 @@ function QueryGenerator(props: any) {
   const [selectCondition, setSelectCondition] = useState<string[]>([])
 
   const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
+
+  // do we need to move this fetch request to another component?
+  function queryDFRequest(query: databaseConnection) {
+    fetch('/api/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ query: query})
+    })
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error("HTTP status " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // set state for the table below the query generator
+        console.log("queryDf", data);
+      })
+      .catch((err) => {
+        console.log('Error:', err)
+      })
+  };
 
   type arrayOfArrays = [string[], string[]] // will have strings within those arrays
   type stringArray = [string?, string?]
@@ -123,6 +145,7 @@ function QueryGenerator(props: any) {
               //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
+            queryDFRequest(reqBody);
           }}>Generate</button>
         </div>
       </div>
