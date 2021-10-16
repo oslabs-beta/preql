@@ -10,7 +10,7 @@ function QueryGenerator(props: any) {
   const [tables, setTables] = useState<string[]>(['', ''])
   const [searchField, setSearchField] = useState<any[]>([[], []])
 
-  let [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
+  const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
 
   const JOIN: string[] = ['OUTER', 'LEFT', 'RIGHT', 'INNER'];
   const joinOptions: any = [];
@@ -48,11 +48,12 @@ function QueryGenerator(props: any) {
         queryDataSet={queryDataSet}
         setSearchField={setSearchField}
         searchField={searchField}
+        setGenerateSearchField={setGenerateSearchField}
         />
       <div className="tableButtons">
         <button className="okayButton" onClick={() => {
           console.log(tableTargets)
-          if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1])setGenerateSearchField(true)
+          if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) setGenerateSearchField(true);
           else setGenerateSearchField(false)
         }}>ok</button>
       </div>
@@ -60,7 +61,9 @@ function QueryGenerator(props: any) {
       <div className="queryGenerator">
         <div className="tableButtons">
           <label htmlFor="">SELECT</label>
-          <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)"/>
+          <div className="multiSelect">
+            <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)"/>
+          </div>
           <label htmlFor="">FROM {tableNames[tableTargets[0]]}</label>
         </div>
         <div className="tableButtons">

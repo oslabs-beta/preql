@@ -144,6 +144,12 @@ body {
             margin: 15px;
             align-items: center;
             font-size: larger;
+            .multiSelect{
+              justify-content: flex-start;
+              div{
+                justify-content: flex-start;
+              }
+            }
             .tableDropdown{
               border: 2px solid rgba(94,23,235,255);
               border-radius: 4px;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SelectionChoices from './SelectionChoices'
 
 const SelectButton = (props: any) => {
-  const { tableNames, tableTargets, tables, queryDataSet, setSearchField, searchField } = props
+  const {setGenerateSearchField, tableNames, tableTargets, tables, queryDataSet, setSearchField, searchField, setTableTargets, setTables } = props
 
   function searchFieldsChanger(nameOfTable: string, dataFromTable: object[], index: number) {
     const array:string[] = []
@@ -12,7 +12,7 @@ const SelectButton = (props: any) => {
     }
     searchField[index] = array
     //we have to invoke set state so the whole thing re-renders and the search bar changes
-    setSearchField(setSearchField)
+    setSearchField(searchField)
   }
 
   const selectors: any = []
@@ -24,8 +24,11 @@ const SelectButton = (props: any) => {
         tableTargets={tableTargets}
         queryDataSet={queryDataSet}
         searchFieldsChanger={searchFieldsChanger}
+        setTableTargets={setTableTargets}
+        setTables={setTables}
         num={i}
         key={i}
+        setGenerateSearchField={setGenerateSearchField}
       />
     )
   }
