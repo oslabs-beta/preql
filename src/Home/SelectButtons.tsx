@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SelectionChoices from './SelectionChoices'
 
 const SelectButton = (props: any) => {
-  const {setGenerateSearchField, tableNames, tableTargets, tables, queryDataSet, setSearchField, searchField, setTableTargets, setTables } = props
+  const {setSelectCondition, setJoinCondition, setOnCondition, setGenerateSearchField, tableNames, tableTargets, tables, queryDataSet, setSearchField, searchField, setTableTargets, setTables } = props
 
   function searchFieldsChanger(nameOfTable: string, dataFromTable: object[], index: number) {
     const array:string[] = []
@@ -13,12 +13,16 @@ const SelectButton = (props: any) => {
     searchField[index] = array
     //we have to invoke set state so the whole thing re-renders and the search bar changes
     setSearchField(searchField)
+    //so that the reqBody gets the default initial selections as on condotions
+    setOnCondition([searchField[0][0], searchField[1][0]]);
   }
 
   const selectors: any = []
   for (let i = 0; i < tables.length; i++) {
     selectors.push(
       <SelectionChoices
+        setSelectCondition={setSelectCondition}
+        setJoinCondition={setJoinCondition}
         tableNames={tableNames}
         tables={tables}
         tableTargets={tableTargets}
