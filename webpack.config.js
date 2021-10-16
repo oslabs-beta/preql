@@ -37,23 +37,23 @@ module.exports = {
           },
           {
             // Now we apply rule for images
-            test: /\.(png|jpe?g|gif|svg)$/,
+            test: /\.(png|jpg|gif|svg)$/,
             use: [
               {
                 // Using file-loader for these files
                 loader: "file-loader",
-
+                // loader: "url-loader",
                 // In options we can set different things like format
                 // and directory to save
                 options: {
-                  outputPath: 'images'
+                  outputPath: '/images'
                 }
               }
             ]
           },
           // {
-          //   test: /\.tsx?$/,
-          //   loader: 'babel-loader',
+          //   test: /\.(png|jpg)$/,
+          //   loader: 'url-loader'
           // },
         ]
     },
@@ -63,7 +63,7 @@ module.exports = {
     },
     devServer: {
       static: {
-        directory: path.join(__dirname, '/'),
+        directory: path.join(__dirname, '/src'),
         },
       proxy: {
         '/': 'http://localhost:3000'
