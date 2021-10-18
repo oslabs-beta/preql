@@ -152,35 +152,4 @@ function QueryGenerator(props: any) {
   )
 }
 
-
 export default QueryGenerator
-
-
-/* // <div>
-    //   <div className="tableButtons">
-    //     <select className="tableDropdown" onChange={(ev) => { /*invoke searchFieldsChanger here  */
-    //       const nameOfTable = ev.target.value;
-    //       const index = ev.target.selectedIndex;
-    //       setTableTargets([index, tableTargets[1]]);
-    //       setTables([nameOfTable, tables[1]]);
-
-    //       const dataFromTable = queryDataSet[index];
-    //       searchFieldsChanger(nameOfTable, dataFromTable, 0);
-    //     }}>
-    //       {options}
-    //     </select>
-    //   </div>
-    //   <div className="tableButtons">
-    //     <select className="tableDropdown" onChange={(ev) => { /*invoke searchFieldsChanger here  */
-    //       const nameOfTable = ev.target.value;
-    //       const index = ev.target.selectedIndex;
-    //       setTableTargets([index, tableTargets[1]]);
-    //       setTables([nameOfTable, tables[1]]);
-
-    //       const dataFromTable = queryDataSet[index];
-    //       searchFieldsChanger(nameOfTable, dataFromTable, 0);
-    //     }}>
-    //       {options}
-    //     </select>
-    //   </div>
-    // </div> */}
