@@ -6,7 +6,7 @@ import SelectButton from './SelectButtons';
 import Warning from './Warning';
 
 function QueryGenerator(props: any) {
-  const { queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
+  const { setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
   const [tableTargets, setTableTargets] = useState<number[]>([-1, -1])
   const [tables, setTables] = useState<string[]>(['', ''])
@@ -31,9 +31,10 @@ function QueryGenerator(props: any) {
       })
       .then(data => {
         // set state for the table below the query generator
+        setQueryTable(data);
       })
       .catch((err) => {
-        console.log('Error:', err)
+        console.log('Error:', err);
       })
   };
 
@@ -142,6 +143,7 @@ function QueryGenerator(props: any) {
               //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
+            console.log(reqBody.on)
             queryDFRequest(reqBody)
           }}>Generate</button>
         </div>

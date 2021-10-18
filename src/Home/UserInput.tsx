@@ -1,7 +1,7 @@
-import React, { useState, useEffect, Component } from 'react'
+import React, { useState, useEffect, Component } from 'react';
 
 const UserInput = (props: any) => {
-  const [URIinput, setURIinput] = useState<string>('')
+  const [URIinput, setURIinput] = useState<string>('');
   return(
     <div className="UserInput">
       <label>{props.field}</label>
