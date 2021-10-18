@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Component, FC} from 'react';
 import InputRows from './InputRows';
-import Tables from './Tables'
-import TableSelector from './TableSelector'
-import QueryGenerator from './QueryGenerator'
-import Warning from './Warning'
+import Tables from './Tables';
+import TableSelector from './TableSelector';
+import QueryGenerator from './QueryGenerator';
 
 
 function Home() {
@@ -17,8 +16,6 @@ function Home() {
   const [tableNames, setTableNames] = useState<string>(''); //this kind of syntax allows functionality of changing state all in one function
   const [queryDataSet, setQueryDataSet] = useState<string>('');
   const [queryDisplayData, setQueryDisplayData] = useState<number[]>([null, null]);
-
-  const [warning, setWarning] = useState<string>('')
 
   function makeDBRequest(link: string) {
     fetch('/api/connect', {
@@ -87,15 +84,12 @@ function Home() {
           displayData={visualizerData}
           setVisualizerData={setVisualizerData}
         />
-        <Warning
-          warning={warning}
-          setWarning={setWarning}
-        />
         <QueryGenerator
           tableNames={tableNames} //tableNames is a useState - {tableNames} will invoke the func(invokes state)
           changeDataRender={changeDataRender}
           queryDataSet={queryDataSet}
           queryDisplayData={queryDisplayData}
+          setQueryDataSet={setQueryDataSet}
         />
         <Tables
           changeDataRender={changeDataRender}

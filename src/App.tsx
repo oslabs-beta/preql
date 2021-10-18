@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component} from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Navbar from './navbar';
@@ -27,3 +27,4 @@ const App = () => {
 }
 
 export default App
+
