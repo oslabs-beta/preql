@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 const SelectionChoices = (props: any) => {
-  const { setSelectCondition, setJoinCondition, setGenerateSearchField, tableNames, tableTargets, tables, queryDataSet, searchFieldsChanger, num, setTableTargets, setTables } = props
+  const { setWarning, setGenerateSearchField, tableNames, tableTargets, tables, queryDataSet, searchFieldsChanger, num, setTableTargets, setTables } = props
 
   const options: any = [<option key={-1}></option>]; //need to ensure input being pushed inside array will be a string
   for (let i = 0; i < tableNames.length; i++) {
@@ -23,12 +23,16 @@ const SelectionChoices = (props: any) => {
             setTableTargets(tableTargets)
             tables[num] = nameOfTable
             setTables(tables)
+            console.log(tables)
+
+            if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) {
+              setWarning(false)
+            }
+            else setWarning(true)
+            
             const dataFromTable = queryDataSet[index - 1];
             searchFieldsChanger(nameOfTable, dataFromTable, num);
-            //reset join selections
-            setJoinCondition('INNER');
-            setSelectCondition([]);
-            // setGenerateSearchField(true);
+            setGenerateSearchField(false);
             }
           }>
           {options}
