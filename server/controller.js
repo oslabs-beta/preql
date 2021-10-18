@@ -52,16 +52,16 @@ controller.getTableData = async (req, res, next) => {
 
 controller.getJoinTable = async (req, res, next) => {
 
-    const tables = req.body.tables;
-    const tableOne = req.body.tables[0];
-    const tableTwo = req.body.tables[1];
-    const joinHow = req.body.how;
-    const on = req.body.on;
-    const columns = req.body.columns;
-    const tableNames = req.body.tableNames;
+    const tables = req.body.query.tables;
+    const tableOne = req.body.query.tables[0];
+    const tableTwo = req.body.query.tables[1];
+    const joinHow = req.body.query.how;
+    const on = req.body.query.on;
+    const columns = req.body.query.columns;
+    const tableNames = req.body.query.tableNames;
     const columnNames = [];
     const qureynames = [];
-
+    console.log(on)
     try{
         for (let i = 0; i < tableNames.length; i++){
             columnNames.push([])
@@ -81,18 +81,18 @@ controller.getJoinTable = async (req, res, next) => {
         for (let i = 0; i < columnNames.length; i++){
             columnNames[i] = [...columnNames[i], 'merge'];
         }
-        
-
+        console.log("on ", on)
         dfOne = dfOne.restructure(columnNames[0])
         dfTwo = dfTwo.restructure(columnNames[1])
-
-        dfOne = dfOne.map(row => row.set('merge', row.get(`${on[0]}`)));
-        dfTwo = dfTwo.map(row => row.set('merge', row.get(`${on[1]}`)));
+        dfOne = dfOne.map(row => row.set('merge', row.get(`${on[0]}`))).cast('merge', String);
+        // console.log('df1 ',dfOne.head(10).toCollection());//[0]['merge']
+        dfTwo = dfTwo.map(row => row.set('merge', row.get(`${on[1]}`))).cast('merge', String);
+        // console.log('df2 ',dfTwo.head(10).toCollection())
         dfJoin = dfOne.join(dfTwo, 'merge', joinHow.toLowerCase());
         dfJoin = dfJoin.drop('merge')
+        console.log('join ', dfJoin.head(10).toCollection());
         if (columns[0]) dfJoin = dfJoin.restructure(columns);
         res.locals.returnJoinData = dfJoin.toCollection();
-
 
         next();
     }
