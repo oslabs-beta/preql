@@ -1,18 +1,18 @@
-import React, {useLayoutEffect, useState, FC } from 'react';
+import { join } from 'path/posix';
+import React, {useLayoutEffect, useState, FC, useRef, useEffect } from 'react';
 import ReactDOM from'react-dom'
 import Select from 'react-select';
 import SelectButton from './SelectButtons';
+import Warning from './Warning';
 
 function QueryGenerator(props: any) {
   const { queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
-  const [tableTargets, setTableTargets] = useState<number[]>([null, null])
+  const [tableTargets, setTableTargets] = useState<number[]>([-1, -1])
   const [tables, setTables] = useState<string[]>(['', ''])
-  const [searchField, setSearchField] = useState<any[]>([[], []])
+  const [searchField, setSearchField] = useState<any[]>([[''], ['']])
 
-  const [onCondition, setOnCondition] = useState<string[]>(['',''])
-  const [joinCondition, setJoinCondition] = useState<string>('') //default will always be inner
-  const [selectCondition, setSelectCondition] = useState<string[]>([])
+  const [warning, setWarning] = useState<boolean>(false)
 
   const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
 
@@ -39,13 +39,14 @@ function QueryGenerator(props: any) {
   };
 
   type arrayOfArrays = [string[], string[]] // will have strings within those arrays
-  type stringArray = [string?, string?]
+  type stringArray = [string, string]
+  type optionalStrings = [string?, string?]
 
   interface databaseConnection {
     tables: arrayOfArrays;
     on: string[];
     how: string;
-    columns?: string[]
+    columns: optionalStrings;
     tableNames: stringArray;
   }
 
@@ -58,7 +59,6 @@ function QueryGenerator(props: any) {
       <option key={i} value={joinType}>{joinType}</option>
     )
   }
-
 
 
   let listOfOptions = [];
@@ -75,8 +75,18 @@ function QueryGenerator(props: any) {
     }
   }
 
+  useEffect(()=>{
+    setGenerateSearchField(true);
+  }, [generateSearchField])
+
+  let onCondition = [searchField[0][0], searchField[1][0]]
+  let joinCondition:string = JOIN[0];
+  let selectCondition:any = [];
+
+  console.log(searchField)
+
   return (
-    <div className="queryGenerator">
+    <div className="queryContainer">
         <SelectButton
         tableNames={tableNames}
         tables={tables}
@@ -87,45 +97,39 @@ function QueryGenerator(props: any) {
         setSearchField={setSearchField}
         searchField={searchField}
         setGenerateSearchField={setGenerateSearchField}
-        setOnCondition={setOnCondition}
-        setJoinCondition={setJoinCondition}
-        setSelectCondition={setSelectCondition}
+        setWarning={setWarning}
         />
-      <div className="tableButtons">
-        <button className="okayButton" onClick={() => {
-          console.log(tableTargets)
-          if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) setGenerateSearchField(true);
-          // else setGenerateSearchField(false)
-        }}>ok</button>
-      </div>
-      { generateSearchField ?
+      <Warning warning={warning} className="warning" />
       <div className="queryGenerator">
         <div className="tableButtons">
           <label htmlFor="">SELECT</label>
           <div className="multiSelect">
             <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
-              const array = []
-              for (let i = 0; i < ev.length; i++) array.push(ev[i]['value']);
-              setSelectCondition(array);
+              selectCondition = [];
+              for (let i = 0; i < ev.length; i++) selectCondition.push(ev[i]['value']);
+              console.log(selectCondition)
           }}/>
           </div>
           <label htmlFor="">FROM {tableNames[tableTargets[0]]}</label>
         </div>
         <div className="tableButtons">
           <select className="tableDropdown" onChange={(ev) => {
-            setJoinCondition(ev.target.value)
+            joinCondition = JOIN[ev.target.selectedIndex];
+            console.log(joinCondition)
           }}>
             {joinOptions}
           </select>
           <label htmlFor="">JOIN {tableNames[tableTargets[1]]} ON</label>
           <select className="tableDropdown" onChange={(ev) => {
-            setOnCondition([ev.target.value, onCondition[1]])
+            onCondition = [ev.target.value, onCondition[1]];
+            console.log(onCondition)
           }}>
             {onOptions[0]}
           </select>
           <label htmlFor=""> = </label>
           <select className="tableDropdown" onChange={(ev) => {
-            setOnCondition([onCondition[0], ev.target.value])
+            onCondition = [onCondition[0], ev.target.value]
+            console.log(onCondition)
           }}>
             {onOptions[1]}
           </select>
@@ -145,12 +149,12 @@ function QueryGenerator(props: any) {
               //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
-            queryDFRequest(reqBody);
+            console.log(reqBody)
           }}>Generate</button>
         </div>
       </div>
-        : null
-      }
+        {/* : null
+      } */}
     </div>
   )
 }

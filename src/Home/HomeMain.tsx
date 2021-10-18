@@ -18,8 +18,6 @@ function Home() {
   const [queryDataSet, setQueryDataSet] = useState<string>('');
   const [queryDisplayData, setQueryDisplayData] = useState<number[]>([null, null]);
 
-  const [warning, setWarning] = useState<string>('')
-
   function makeDBRequest(link: string) {
     fetch('/api/connect', {
       method: 'POST',
@@ -86,10 +84,6 @@ function Home() {
           dataSet={dataSet}
           displayData={visualizerData}
           setVisualizerData={setVisualizerData}
-        />
-        <Warning
-          warning={warning}
-          setWarning={setWarning}
         />
         <QueryGenerator
           tableNames={tableNames} //tableNames is a useState - {tableNames} will invoke the func(invokes state)
