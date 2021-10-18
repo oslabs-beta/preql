@@ -90,6 +90,7 @@ function Home() {
           changeDataRender={changeDataRender}
           queryDataSet={queryDataSet}
           queryDisplayData={queryDisplayData}
+          setQueryDataSet={setQueryDataSet}
         />
         <Tables
           changeDataRender={changeDataRender}

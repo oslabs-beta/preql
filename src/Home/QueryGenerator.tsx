@@ -6,7 +6,7 @@ import SelectButton from './SelectButtons';
 import Warning from './Warning';
 
 function QueryGenerator(props: any) {
-  const { queryDataSet, tableNames, changeDataRender} = props;
+  const { queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
   const [tableTargets, setTableTargets] = useState<number[]>([-1, -1])
   const [tables, setTables] = useState<string[]>(['', ''])
@@ -15,6 +15,27 @@ function QueryGenerator(props: any) {
   const [warning, setWarning] = useState<boolean>(false)
 
   const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
+
+  // do we need to move this fetch request to another component?
+  function queryDFRequest(query: databaseConnection) {
+    fetch('/api/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ query })
+    })
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error("HTTP status " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // set state for the table below the query generator
+      })
+      .catch((err) => {
+        console.log('Error:', err)
+      })
+  };
 
   type arrayOfArrays = [string[], string[]] // will have strings within those arrays
   type stringArray = [string, string]
@@ -61,8 +82,6 @@ function QueryGenerator(props: any) {
   let joinCondition:string = JOIN[0];
   let selectCondition:any = [];
 
-  console.log(searchField)
-
   return (
     <div className="queryContainer">
         <SelectButton
@@ -85,7 +104,6 @@ function QueryGenerator(props: any) {
             <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
               selectCondition = [];
               for (let i = 0; i < ev.length; i++) selectCondition.push(ev[i]['value']);
-              console.log(selectCondition)
           }}/>
           </div>
           <label htmlFor="">FROM {tableNames[tableTargets[0]]}</label>
@@ -93,21 +111,18 @@ function QueryGenerator(props: any) {
         <div className="tableButtons">
           <select className="tableDropdown" onChange={(ev) => {
             joinCondition = JOIN[ev.target.selectedIndex];
-            console.log(joinCondition)
           }}>
             {joinOptions}
           </select>
           <label htmlFor="">JOIN {tableNames[tableTargets[1]]} ON</label>
           <select className="tableDropdown" onChange={(ev) => {
             onCondition = [ev.target.value, onCondition[1]];
-            console.log(onCondition)
           }}>
             {onOptions[0]}
           </select>
           <label htmlFor=""> = </label>
           <select className="tableDropdown" onChange={(ev) => {
             onCondition = [onCondition[0], ev.target.value]
-            console.log(onCondition)
           }}>
             {onOptions[1]}
           </select>
@@ -127,7 +142,7 @@ function QueryGenerator(props: any) {
               //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
-            console.log(reqBody)
+            queryDFRequest(reqBody)
           }}>Generate</button>
         </div>
       </div>
@@ -137,35 +152,4 @@ function QueryGenerator(props: any) {
   )
 }
 
-
 export default QueryGenerator
-
-
-/* // <div>
-    //   <div className="tableButtons">
-    //     <select className="tableDropdown" onChange={(ev) => { /*invoke searchFieldsChanger here  */
-    //       const nameOfTable = ev.target.value;
-    //       const index = ev.target.selectedIndex;
-    //       setTableTargets([index, tableTargets[1]]);
-    //       setTables([nameOfTable, tables[1]]);
-
-    //       const dataFromTable = queryDataSet[index];
-    //       searchFieldsChanger(nameOfTable, dataFromTable, 0);
-    //     }}>
-    //       {options}
-    //     </select>
-    //   </div>
-    //   <div className="tableButtons">
-    //     <select className="tableDropdown" onChange={(ev) => { /*invoke searchFieldsChanger here  */
-    //       const nameOfTable = ev.target.value;
-    //       const index = ev.target.selectedIndex;
-    //       setTableTargets([index, tableTargets[1]]);
-    //       setTables([nameOfTable, tables[1]]);
-
-    //       const dataFromTable = queryDataSet[index];
-    //       searchFieldsChanger(nameOfTable, dataFromTable, 0);
-    //     }}>
-    //       {options}
-    //     </select>
-    //   </div>
-    // </div> */}
