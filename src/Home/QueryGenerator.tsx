@@ -1,23 +1,57 @@
-import React, {useLayoutEffect, useState, FC } from 'react';
+import { join } from 'path/posix';
+import React, {useLayoutEffect, useState, FC, useRef, useEffect } from 'react';
 import ReactDOM from'react-dom'
 import Select from 'react-select';
 import SelectButton from './SelectButtons';
+import Warning from './Warning';
 
 function QueryGenerator(props: any) {
-  const { queryDataSet, tableNames, changeDataRender} = props;
+  const { queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
-  const [tableTargets, setTableTargets] = useState<number[]>([null, null])
+  const [tableTargets, setTableTargets] = useState<number[]>([-1, -1])
   const [tables, setTables] = useState<string[]>(['', ''])
-  const [searchField, setSearchField] = useState<any[]>([[], []])
-  const [onCondition, setOnCondition] = useState<string[]>(['',''])
-  const [joinCondition, setJoinCondition] = useState<string>('') //default will always be inner
-  const [selectCondition, setSelectCondition] = useState<string[]>([])
+  const [searchField, setSearchField] = useState<any[]>([[''], ['']])
+
+  const [warning, setWarning] = useState<boolean>(false)
 
   const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
 
+  // do we need to move this fetch request to another component?
+  function queryDFRequest(query: databaseConnection) {
+    fetch('/api/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ query })
+    })
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error("HTTP status " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // set state for the table below the query generator
+      })
+      .catch((err) => {
+        console.log('Error:', err)
+      })
+  };
+
+  type arrayOfArrays = [string[], string[]] // will have strings within those arrays
+  type stringArray = [string, string]
+  type optionalStrings = [string?, string?]
+
+  interface databaseConnection {
+    tables: arrayOfArrays;
+    on: string[];
+    how: string;
+    columns: optionalStrings;
+    tableNames: stringArray;
+  }
+
   const JOIN: string[] = ['INNER', 'LEFT', 'RIGHT', 'OUTER'];
   const joinOptions: any = [];
-  
+
   for (let i = 0; i < JOIN.length; i++) {
     let joinType = JOIN[i];
     joinOptions.push(
@@ -25,7 +59,6 @@ function QueryGenerator(props: any) {
     )
   }
 
-  // function autoCompleteBox() {
 
   let listOfOptions = [];
   let onOptions=[];
@@ -41,8 +74,16 @@ function QueryGenerator(props: any) {
     }
   }
 
+  useEffect(()=>{
+    setGenerateSearchField(true);
+  }, [generateSearchField])
+
+  let onCondition = [searchField[0][0], searchField[1][0]]
+  let joinCondition:string = JOIN[0];
+  let selectCondition:any = [];
+
   return (
-    <div className="queryGenerator">
+    <div className="queryContainer">
         <SelectButton
         tableNames={tableNames}
         tables={tables}
@@ -53,45 +94,35 @@ function QueryGenerator(props: any) {
         setSearchField={setSearchField}
         searchField={searchField}
         setGenerateSearchField={setGenerateSearchField}
-        setOnCondition={setOnCondition}
-        setJoinCondition={setJoinCondition}
-        setSelectCondition={setSelectCondition}
+        setWarning={setWarning}
         />
-      <div className="tableButtons">
-        <button className="okayButton" onClick={() => {
-          console.log(tableTargets)
-          if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) setGenerateSearchField(true);
-          else setGenerateSearchField(false)
-        }}>ok</button>
-      </div>
-      { generateSearchField ?
+      <Warning warning={warning} className="warning" />
       <div className="queryGenerator">
         <div className="tableButtons">
           <label htmlFor="">SELECT</label>
           <div className="multiSelect">
             <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
-              const array = []
-              for (let i = 0; i < ev.length; i++) array.push(ev[i]['value']);
-              setSelectCondition(array);
+              selectCondition = [];
+              for (let i = 0; i < ev.length; i++) selectCondition.push(ev[i]['value']);
           }}/>
           </div>
           <label htmlFor="">FROM {tableNames[tableTargets[0]]}</label>
         </div>
         <div className="tableButtons">
           <select className="tableDropdown" onChange={(ev) => {
-            setJoinCondition(ev.target.value)
+            joinCondition = JOIN[ev.target.selectedIndex];
           }}>
             {joinOptions}
           </select>
           <label htmlFor="">JOIN {tableNames[tableTargets[1]]} ON</label>
           <select className="tableDropdown" onChange={(ev) => {
-            setOnCondition([ev.target.value, onCondition[1]])
+            onCondition = [ev.target.value, onCondition[1]];
           }}>
             {onOptions[0]}
           </select>
           <label htmlFor=""> = </label>
           <select className="tableDropdown" onChange={(ev) => {
-            setOnCondition([onCondition[0], ev.target.value])
+            onCondition = [onCondition[0], ev.target.value]
           }}>
             {onOptions[1]}
           </select>
@@ -99,58 +130,26 @@ function QueryGenerator(props: any) {
         <div>
           <button className="generateButton" onClick={() => {
             // changeDataRender(false, tableTargets[0], tableTargets[1])
-            const reqBody = {
+            const reqBody:databaseConnection = {
               //array or arrays
               tables: [queryDataSet[tableTargets[0]], queryDataSet[tableTargets[1]]],
-              //array of strings of length 2 
+              //array of strings of length 2
               on: onCondition,
               //string not empty and 'INNER', 'LEFT', 'RIGHT', 'OUTER'
               how: joinCondition,
               //array of strings or empty array
               columns: selectCondition,
-              //array of strings of length 2 
+              //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
-            console.log(reqBody)
-          }
-          }>Generate</button>
+            queryDFRequest(reqBody)
+          }}>Generate</button>
         </div>
       </div>
-        : null
-      }
+        {/* : null
+      } */}
     </div>
   )
 }
 
-
 export default QueryGenerator
-
-
-/* // <div>
-    //   <div className="tableButtons">
-    //     <select className="tableDropdown" onChange={(ev) => { /*invoke searchFieldsChanger here  */
-    //       const nameOfTable = ev.target.value;
-    //       const index = ev.target.selectedIndex;
-    //       setTableTargets([index, tableTargets[1]]);
-    //       setTables([nameOfTable, tables[1]]);
-
-    //       const dataFromTable = queryDataSet[index];
-    //       searchFieldsChanger(nameOfTable, dataFromTable, 0);
-    //     }}>
-    //       {options}
-    //     </select>
-    //   </div>
-    //   <div className="tableButtons">
-    //     <select className="tableDropdown" onChange={(ev) => { /*invoke searchFieldsChanger here  */
-    //       const nameOfTable = ev.target.value;
-    //       const index = ev.target.selectedIndex;
-    //       setTableTargets([index, tableTargets[1]]);
-    //       setTables([nameOfTable, tables[1]]);
-
-    //       const dataFromTable = queryDataSet[index];
-    //       searchFieldsChanger(nameOfTable, dataFromTable, 0);
-    //     }}>
-    //       {options}
-    //     </select>
-    //   </div>
-    // </div> */}

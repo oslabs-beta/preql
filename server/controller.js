@@ -52,16 +52,16 @@ controller.getTableData = async (req, res, next) => {
 
 controller.getJoinTable = async (req, res, next) => {
 
-    const tables = req.body.tables;
-    const tableOne = req.body.tables[0];
-    const tableTwo = req.body.tables[1];
-    const joinHow = req.body.how;
-    const on = req.body.on;
-    const columns = req.body.columns;
-    const tableNames = req.body.tableNames;
+    const tables = req.body.query.tables;
+    const tableOne = req.body.query.tables[0];
+    const tableTwo = req.body.query.tables[1];
+    const joinHow = req.body.query.how;
+    const on = req.body.query.on;
+    const columns = req.body.query.columns;
+    const tableNames = req.body.query.tableNames;
     const columnNames = [];
     const qureynames = [];
-
+    
     try{
         for (let i = 0; i < tableNames.length; i++){
             columnNames.push([])
@@ -92,7 +92,6 @@ controller.getJoinTable = async (req, res, next) => {
         dfJoin = dfJoin.drop('merge')
         if (columns[0]) dfJoin = dfJoin.restructure(columns);
         res.locals.returnJoinData = dfJoin.toCollection();
-
 
         next();
     }

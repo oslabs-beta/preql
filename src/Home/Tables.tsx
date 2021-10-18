@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Component, FC } from 'react';
+import ReactCSSTransitionGroup from 'react-transition-group'
 
 const Tables = (props: any) => {
   const headers = [];
@@ -70,8 +71,8 @@ const Tables = (props: any) => {
 
   if (table) {
     return (
-      <div className="container">
-        <table>
+      <div className="container" >
+        <table >
           <thead>
             <tr>
               {headers}
