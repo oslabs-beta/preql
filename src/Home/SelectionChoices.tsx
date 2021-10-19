@@ -28,7 +28,7 @@ const SelectionChoices = (props: any) => {
               setWarning(false)
             }
             else setWarning(true)
-            
+
             const dataFromTable = queryDataSet[index - 1];
             searchFieldsChanger(nameOfTable, dataFromTable, num);
             setGenerateSearchField(false);
