@@ -28,9 +28,7 @@ function QueryGenerator(props: any) {
     fetch('/api/join', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
-
       body: JSON.stringify({ query })
-
     })
       .then(function(response) {
         if (!response.ok) {
