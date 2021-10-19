@@ -19,11 +19,10 @@ const SelectionChoices = (props: any) => {
             const index = ev.target.selectedIndex;
             //the table we create is always one length longer than the one we are comparing too
             // so we minus one on lines 22 and 24
-            tableTargets[num] = index - 1
-            setTableTargets(tableTargets)
+            tableTargets[num] = index - 1;
+            setTableTargets(tableTargets);
             tables[num] = nameOfTable
             setTables(tables)
-            console.log(tables)
 
             if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) {
               setWarning(false)
