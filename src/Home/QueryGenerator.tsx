@@ -6,15 +6,22 @@ import SelectButton from './SelectButtons';
 import Warning from './Warning';
 
 function QueryGenerator(props: any) {
-  const { queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
-  const [tableTargets, setTableTargets] = useState<number[]>([-1, -1])
+  const { setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
+
+
+  const [tableTargets, setTableTargets] = useState<number[]>([-1, -1]);
   const [tables, setTables] = useState<string[]>(['', ''])
-  const [searchField, setSearchField] = useState<any[]>([[''], ['']])
+  const [searchField, setSearchField] = useState<any[]>([[''], ['']]);
+  const [listIndex, setListIndex] = useState<number[]>([0, 0]);
 
-  const [warning, setWarning] = useState<boolean>(false)
+  const [warning, setWarning] = useState<boolean>(false);
+  const [selectionField, setSelectionField] = useState<string[]>([])
 
-  const [generateSearchField, setGenerateSearchField] = useState<boolean>(false)
+  const [generateSearchField, setGenerateSearchField] = useState<boolean>(false);
+
+  const [joinCondition, setJoinCondition] = useState<string>('INNER');
+  let onCondition = [searchField[0][listIndex[0]], searchField[1][listIndex[1]]]
 
   // do we need to move this fetch request to another component?
   function queryDFRequest(query: databaseConnection) {
@@ -31,9 +38,11 @@ function QueryGenerator(props: any) {
       })
       .then(data => {
         // set state for the table below the query generator
+        setQueryTable(data);
       })
       .catch((err) => {
-        console.log('Error:', err)
+        console.log('Error:', err);
+
       })
   };
 
@@ -45,7 +54,7 @@ function QueryGenerator(props: any) {
     tables: arrayOfArrays;
     on: string[];
     how: string;
-    columns: optionalStrings;
+    columns: string[];
     tableNames: stringArray;
   }
 
@@ -58,7 +67,6 @@ function QueryGenerator(props: any) {
       <option key={i} value={joinType}>{joinType}</option>
     )
   }
-
 
   let listOfOptions = [];
   let onOptions=[];
@@ -77,10 +85,6 @@ function QueryGenerator(props: any) {
   useEffect(()=>{
     setGenerateSearchField(true);
   }, [generateSearchField])
-
-  let onCondition = [searchField[0][0], searchField[1][0]]
-  let joinCondition:string = JOIN[0];
-  let selectCondition:any = [];
 
   return (
     <div className="queryContainer">
@@ -102,27 +106,29 @@ function QueryGenerator(props: any) {
           <label htmlFor="">SELECT</label>
           <div className="multiSelect">
             <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
-              selectCondition = [];
-              for (let i = 0; i < ev.length; i++) selectCondition.push(ev[i]['value']);
+              const selectConditions = [];
+              for (let i = 0; i < ev.length; i++) selectConditions.push(ev[i]['value']);
+              setSelectionField(selectConditions)
           }}/>
           </div>
           <label htmlFor="">FROM {tableNames[tableTargets[0]]}</label>
         </div>
         <div className="tableButtons">
           <select className="tableDropdown" onChange={(ev) => {
-            joinCondition = JOIN[ev.target.selectedIndex];
+            setJoinCondition(JOIN[ev.target.selectedIndex]);
           }}>
             {joinOptions}
           </select>
           <label htmlFor="">JOIN {tableNames[tableTargets[1]]} ON</label>
           <select className="tableDropdown" onChange={(ev) => {
-            onCondition = [ev.target.value, onCondition[1]];
+            setListIndex([ev.target.selectedIndex, listIndex[1]]);
+            // console.log(ev.target.selectedIndex)
           }}>
             {onOptions[0]}
           </select>
           <label htmlFor=""> = </label>
           <select className="tableDropdown" onChange={(ev) => {
-            onCondition = [onCondition[0], ev.target.value]
+            setListIndex([listIndex[0], ev.target.selectedIndex]);
           }}>
             {onOptions[1]}
           </select>
@@ -138,10 +144,11 @@ function QueryGenerator(props: any) {
               //string not empty and 'INNER', 'LEFT', 'RIGHT', 'OUTER'
               how: joinCondition,
               //array of strings or empty array
-              columns: selectCondition,
+              columns: selectionField,
               //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
+            console.log(reqBody)
             queryDFRequest(reqBody)
           }}>Generate</button>
         </div>

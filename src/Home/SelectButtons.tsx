@@ -40,5 +40,4 @@ const SelectButton = (props: any) => {
   )
 }
 
-
 export default SelectButton

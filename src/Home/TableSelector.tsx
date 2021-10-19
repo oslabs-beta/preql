@@ -1,8 +1,8 @@
-import React, { useEffect, useState, Component} from 'react'
+import React, { useEffect, useState, Component} from 'react';
 
 
 const TableSelector = (props: any) => {
-  const { changeDataRender } = props
+  const { changeDataRender } = props;
 
   const amountOfTables = []
   if (props.dataSet) {
