@@ -11,7 +11,6 @@ const SelectButton = (props: any) => {
       array.push(str)
     }
     searchField[index] = array;
-    console.log(searchField)
     setSearchField(searchField);
   }
 
@@ -40,6 +39,5 @@ const SelectButton = (props: any) => {
     </div>
   )
 }
-
 
 export default SelectButton

@@ -6,7 +6,9 @@ import SelectButton from './SelectButtons';
 import Warning from './Warning';
 
 function QueryGenerator(props: any) {
-  const { queryDataSet, tableNames } = props;
+
+  const { setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
+
 
   const [tableTargets, setTableTargets] = useState<number[]>([-1, -1]);
   const [tables, setTables] = useState<string[]>(['', ''])
@@ -26,7 +28,9 @@ function QueryGenerator(props: any) {
     fetch('/api/join', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
+
       body: JSON.stringify({ query })
+
     })
       .then(function(response) {
         if (!response.ok) {
@@ -36,9 +40,11 @@ function QueryGenerator(props: any) {
       })
       .then(data => {
         // set state for the table below the query generator
+        setQueryTable(data);
       })
       .catch((err) => {
-        console.log('Error:', err)
+        console.log('Error:', err);
+
       })
   };
 
@@ -63,7 +69,6 @@ function QueryGenerator(props: any) {
       <option key={i} value={joinType}>{joinType}</option>
     )
   }
-
 
   let listOfOptions = [];
   let onOptions=[];
