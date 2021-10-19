@@ -6,7 +6,9 @@ import SelectButton from './SelectButtons';
 import Warning from './Warning';
 
 function QueryGenerator(props: any) {
+
   const { setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
+
 
   const [tableTargets, setTableTargets] = useState<number[]>([-1, -1]);
   const [tables, setTables] = useState<string[]>(['', ''])
@@ -26,7 +28,9 @@ function QueryGenerator(props: any) {
     fetch('/api/join', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({ query: query})
+
+      body: JSON.stringify({ query })
+
     })
       .then(function(response) {
         if (!response.ok) {
@@ -40,6 +44,7 @@ function QueryGenerator(props: any) {
       })
       .catch((err) => {
         console.log('Error:', err);
+
       })
   };
 

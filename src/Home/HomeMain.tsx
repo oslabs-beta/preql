@@ -16,7 +16,9 @@ function Home() {
   const [tableNames, setTableNames] = useState<string>(''); //this kind of syntax allows functionality of changing state all in one function
   const [queryDataSet, setQueryDataSet] = useState<string>('');
   const [queryDisplayData, setQueryDisplayData] = useState<number[]>([null, null]);
+
   const [queryTable, setQueryTable] = useState<string>('');
+
 
   function makeDBRequest(link: string) {
     fetch('/api/connect', {
@@ -93,6 +95,7 @@ function Home() {
           queryDisplayData={queryDisplayData}
           setQueryDataSet={setQueryDataSet}
           setQueryTable = {setQueryTable}
+
         />
         <Tables
           changeDataRender={changeDataRender}
