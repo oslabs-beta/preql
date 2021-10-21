@@ -14,6 +14,7 @@
     "babel-loader": "^8.2.2",
     "babel-polyfill": "^6.26.0",
     "dataframe-js": "^1.4.4",
+    "electron-is-dev": "^2.0.0",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
@@ -35,19 +36,27 @@
   "devDependencies": {
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.1",
+    "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.3.0",
-    "electron": "^15.2.0",
+    "electron": "^15.3.0",
+    "electron-builder": "^22.13.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
     "typescript": "^4.4.3",
     "url-loader": "^4.1.1",
+    "wait-on": "^6.0.0",
     "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
     "start": "nodemon server/server.js",
     "build": "NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development webpack server --open & nodemon server/server.js"
+    "dev": "NODE_ENV=development webpack server --open & nodemon server/server.js",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-package": "./node_modules/.bin/electron-builder -c.extraMetadata.main=build/start-electron.js",
+    "preelectron-package": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -59,5 +68,15 @@
   "bugs": {
     "url": "https://github.com/oslabs-beta/preql/issues"
   },
-  "homepage": "https://github.com/oslabs-beta/preql#readme"
+  "build": {
+    "appId": "preql",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "homepage": "./"
 }
