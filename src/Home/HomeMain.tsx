@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Component, FC} from 'react';
-// import InputRows from './InputRows';
 import Tables from './Tables';
 import TableSelector from './TableSelector';
 import QueryGenerator from './QueryGenerator';
@@ -18,6 +17,9 @@ function Home() {
   const [queryDataSet, setQueryDataSet] = useState<string>('');
   const [queryDisplayData, setQueryDisplayData] = useState<number[]>([null, null]);
 
+  const [queryTable, setQueryTable] = useState<string>('');
+
+
   function makeDBRequest(link: string) {
     fetch('/api/connect', {
       method: 'POST',
@@ -34,8 +36,8 @@ function Home() {
       .then(data => {
         setTextField(link);
         setDataSet(data['tableData']);
-        setQueryDataSet(data['tableData'])
-        setTableNames(data['tableNames'])
+        setQueryDataSet(data['tableData']);
+        setTableNames(data['tableNames']);
       })
       .catch((err) => {
         console.log('Error:', err)//YO CT,it is because the value of the first table is 0 so when you if(!value[1]) it alwasy false
@@ -80,7 +82,7 @@ function Home() {
         />
         <Tables
           changeDataRender={changeDataRender}
-          dataSet={dataSet}
+          dataSet={dataSet[visualizerData[0]]}
           displayData={visualizerData}
           setVisualizerData={setVisualizerData}
         />
@@ -88,12 +90,15 @@ function Home() {
           tableNames={tableNames} //tableNames is a useState - {tableNames} will invoke the func(invokes state)
           changeDataRender={changeDataRender}
           queryDataSet={queryDataSet}
+          setQueryDisplayData = {setQueryDisplayData}
           queryDisplayData={queryDisplayData}
           setQueryDataSet={setQueryDataSet}
+          setQueryTable = {setQueryTable}
+
         />
         <Tables
           changeDataRender={changeDataRender}
-          dataSet={queryDataSet}
+          dataSet={queryTable}
           displayData={queryDisplayData}
           setVisualizerData={setQueryDisplayData}
         />

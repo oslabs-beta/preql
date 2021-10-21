@@ -24,7 +24,6 @@ const SelectButton = (props: any) => {
   )
 }
 
-
 export default SelectButton
 
  // function searchFieldsChanger(nameOfTable: string, dataFromTable: object[], index: number) {
