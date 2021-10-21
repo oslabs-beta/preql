@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 const Warning = (props: any) => {
-  const { warning, setWarning, tableTargets } = props;
+  const { warning} = props;
   const [alert, setAlert] = useState<string>('You must pick from two different tables*')
 
   if(warning) {
@@ -12,8 +12,8 @@ const Warning = (props: any) => {
     )
   } else {
     return(
-      <div className='warning' style={{color: "white"}}>
-        {alert}
+      <div className='warning'>
+        {/* {alert} */}
       </div>
     )
   }
