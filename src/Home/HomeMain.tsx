@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Component, FC} from 'react';
-import InputRows from './InputRows';
-import Tables from './Tables'
-import TableSelector from './TableSelector'
-import QueryGenerator from './QueryGenerator'
-import Warning from './Warning'
+// import InputRows from './InputRows';
+import Tables from './Tables';
+import TableSelector from './TableSelector';
+import QueryGenerator from './QueryGenerator';
+import UserInput from './UserInput'
 
 
 function Home() {
@@ -44,11 +44,10 @@ function Home() {
 
   let fieldsArray = [];
   for (let i = 0; i < fields.length; i++) {
-    fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
+    fieldsArray.push(<UserInput fields={fields[i]} key={i} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
   }
 
   function changeDataRender(visualizer: boolean, value: number, value2: number) {
-    console.log(queryDisplayData)
     //hello! this ternary is kinda confusing. its bascially saying that it if its not the visualizer table,
     // then change the other table instead, then check if they values are the same
     // if they are, then just print it once

@@ -1,19 +1,22 @@
-import React, { useState, useEffect, Component, FC } from 'react';
-import UserInput from './UserInput'
+//I removed this whole file since we dont need it anymore. I am just keeping it just in case
 
-const InputRows = (props: any) => {
 
-  const fieldsArray: any = [];
-  let keyID = 0
-  props.fields.forEach((el: any) => {
-    fieldsArray.push(<UserInput field={el} key={++keyID} textField={props.textField} setTextField={props.setTextField} makeDBRequest={props.makeDBRequest}/>)
-  })
+// import React, { useState, useEffect, Component, FC } from 'react';
+// import UserInput from './UserInput'
 
-  return(
-    <div className="InputRows">
-      {fieldsArray}
-    </div>
-  )
-}
+// const InputRows = (props: any) => {
 
-export default InputRows
+//   const fieldsArray: any = [];
+//   let keyID = 0
+//   props.fields.forEach((el: any) => {
+//     fieldsArray.push(<UserInput field={el} key={++keyID} textField={props.textField} setTextField={props.setTextField} makeDBRequest={props.makeDBRequest}/>)
+//   })
+
+//   return(
+//     <div className="InputRows">
+//       {fieldsArray}
+//     </div>
+//   )
+// }
+
+// export default InputRows
