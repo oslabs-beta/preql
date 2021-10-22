@@ -1,4 +1,4 @@
-$triangle: url('./pictures/triangles.jpg');
+// $triangle: url('./pictures/triangles.jpg');
 
 body {
   font-family: monospace;
@@ -35,21 +35,19 @@ body {
     color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     .links {
 
       a {
-        font-family: 'Walter';
         text-decoration: none;
         color: white;
-        margin: 10px 50px 10px 10px;
+        margin: 10px
       }
     }
 
     .logo {
-      max-width: 150px;
-      margin: 10px 10px 10px 50px
+      margin: 10px
     }
   }
   .routes{
