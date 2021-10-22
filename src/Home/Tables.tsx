@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component, FC } from 'react';
-import ReactCSSTransitionGroup from 'react-transition-group'
+// import ReactCSSTransitionGroup from 'react-transition-group';
 
 
 const Tables = (props: any) => {
@@ -40,36 +40,6 @@ const Tables = (props: any) => {
     };
 
   }
-  // if (table2) {
-  //   if (table2.length != 0) {
-  //     const columns = Object.keys(table2[0]);
-  //     for (let i = 0; i < columns.length; i++) {
-  //       headers.push(<th key={`${2}${i}`}>{columns[i]}</th>)
-  //     };
-
-  //     for (let i = 0; i < table2.length; i++) {
-  //       dataObj.push([])
-  //       for (let key in table2[i]) {
-  //         dataObj[i].push(<td key={`${2}${key}${i}`}>{table2[i][key]}</td>)
-  //       }
-  //     };
-  //     for (let i = 0; i < dataObj.length; i++) {
-  //       rowDataObj.push(
-  //         <tr key={`${2}rowdata${i}`}>
-  //           {dataObj[i]}
-  //         </tr>
-  //       )
-  //     };
-  //   }
-  //   else {
-  //     rowDataObj.push(
-  //       <tr key={`rowdata`}>
-
-  //       </tr>
-  //     )
-  //   };
-
-  // }
 
   if (table) {
     return (
