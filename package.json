@@ -2,7 +2,7 @@
   "name": "preql",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/electron.js",
   "dependencies": {
     "@babel/core": "^7.15.5",
     "@babel/plugin-syntax-jsx": "^7.14.5",
@@ -31,7 +31,25 @@
     "sass": "^1.42.1",
     "ts-loader": "^9.2.6",
     "webpack": "^5.58.1",
-    "webpack-cli": "^4.9.0"
+    "webpack-cli": "^4.9.0",
+    "@electron-forge/cli": "^6.0.0-beta.61",
+    "@electron-forge/maker-deb": "^6.0.0-beta.61",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.61",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
+    "@electron-forge/maker-zip": "^6.0.0-beta.61",
+    "electron": "15.3.0",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.3.1",
+    "css-loader": "^6.3.0",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.3.0",
+    "typescript": "^4.4.3",
+    "url-loader": "^4.1.1",
+    "webpack-dev-server": "^4.3.1",
+    "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
+    "electron-builder": "^22.13.1",
+    "wait-on": "^6.0.0"
   },
   "devDependencies": {
     "@types/react-dom": "^17.0.9",
@@ -49,14 +67,15 @@
     "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "electron-forge start",
     "build": "NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development webpack server --open & nodemon server/server.js",
-    "electron": "electron .",
-    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-package": "./node_modules/.bin/electron-builder -c.extraMetadata.main=build/start-electron.js",
-    "preelectron-package": "npm run build"
+    "preelectron-package": "npm run build",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
   },
   "repository": {
     "type": "git",
