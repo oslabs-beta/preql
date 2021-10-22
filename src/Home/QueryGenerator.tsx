@@ -38,7 +38,8 @@ function QueryGenerator(props: any) {
       })
       .then(data => {
         // set state for the table below the query generator
-        setQueryTable(data);
+        setQueryTable(data.table);
+        console.log(data.query);
       })
       .catch((err) => {
         console.log('Error:', err);

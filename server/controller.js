@@ -63,15 +63,21 @@ controller.getJoinTable = async (req, res, next) => {
     const qureynames = [];
     console.log(on)
     try{
+        
         for (let i = 0; i < tableNames.length; i++){
             columnNames.push([])
             for (let name in tables[i][0]){
                 columnNames[i].push(`${tableNames[i]}.${name}`)
-                qureynames.push(`${tableNames[i]}.${name} as \"${tableNames[i]}.${name}\"`)
+                if (!columns[0]) qureynames.push(`${tableNames[i]}.${name} as \"${tableNames[i]}.${name}\"`)
             }
-
         }
-
+        if (columns[0]){
+            for (let i = 0; i < columns.length; i++){
+                qureynames.push(`${columns[i]} as \"${columns[i]}\"`)
+            }
+        }
+        //change for FULL OUTER later
+        const QUERY_RETURN = `SELECT ${qureynames.join(', ')} FROM ${tableNames[0]} ${joinHow} JOIN ${tableNames[1]} ON ${on[0]} = ${on[1]}`
         dfOne = new DataFrame(tableOne);
         dfOne = dfOne.renameAll(columnNames[0]);
 
@@ -81,18 +87,18 @@ controller.getJoinTable = async (req, res, next) => {
         for (let i = 0; i < columnNames.length; i++){
             columnNames[i] = [...columnNames[i], 'merge'];
         }
-        console.log("on ", on)
+        console.log("1")
         dfOne = dfOne.restructure(columnNames[0])
         dfTwo = dfTwo.restructure(columnNames[1])
         dfOne = dfOne.map(row => row.set('merge', row.get(`${on[0]}`))).cast('merge', String);
-        // console.log('df1 ',dfOne.head(10).toCollection());//[0]['merge']
         dfTwo = dfTwo.map(row => row.set('merge', row.get(`${on[1]}`))).cast('merge', String);
-        // console.log('df2 ',dfTwo.head(10).toCollection())
         dfJoin = dfOne.join(dfTwo, 'merge', joinHow.toLowerCase());
         dfJoin = dfJoin.drop('merge')
-        console.log('join ', dfJoin.head(10).toCollection());
         if (columns[0]) dfJoin = dfJoin.restructure(columns);
-        res.locals.returnJoinData = dfJoin.toCollection();
+        res.locals.returnJoinData = {
+            table: dfJoin.toCollection(),
+            query: QUERY_RETURN
+        }
 
         next();
     }
