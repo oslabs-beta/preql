@@ -22,9 +22,8 @@
   <ol>
     <li>Copy / paste your PostgreSQL database link and click 'Generate' to view your data.</li>
     <img src='/src/pictures/preQL1.gif' />
-    <li>Placeholder</li>
-    <li>Placeholder</li>
-    <li>Placeholder</li>
+    <li>Below the table visualizer, you can test various SQL queries to compare two different tables without pinging your database over and over again</li>
+    <img src='/src/pictures/preQL2.gif' />
   </ol>
  
 
