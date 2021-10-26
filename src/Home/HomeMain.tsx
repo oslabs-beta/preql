@@ -18,7 +18,7 @@ function Home() {
   const [queryDisplayData, setQueryDisplayData] = useState<number[]>([null, null]);
 
   const [queryTable, setQueryTable] = useState<string>('');
-
+  const [queryCommand, setQueryCommand] = useState<string>('');
 
   function makeDBRequest(link: string) {
     fetch('/api/connect', {
@@ -95,7 +95,7 @@ function Home() {
           queryDisplayData={queryDisplayData}
           setQueryDataSet={setQueryDataSet}
           setQueryTable = {setQueryTable}
-
+          setQueryCommand = {setQueryCommand}
         />
         <Tables
           changeDataRender={changeDataRender}
@@ -103,6 +103,8 @@ function Home() {
           displayData={queryDisplayData}
           setVisualizerData={setQueryDisplayData}
         />
+        <h3>Command:</h3>
+        <div className="queryCommand">{queryCommand}</div>
       </div>
     );
   }

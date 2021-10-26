@@ -57,7 +57,7 @@ body {
     margin: auto;
     .homeContainer{
       //border: 2px solid rgba(94,23,235,255);
-      h1, h3, label{
+      h1, h3, label, .queryCommand{
         color: grey;
         text-align: center;
       }
@@ -116,35 +116,31 @@ body {
         max-height: 400px;
         margin-bottom: 50px;
         table {
-          background-color: #35363a;
-          color: #EDE7E3;
-          border: 1px solid rgba(94,23,235,255);
-          border-radius: 15px;
           border-collapse: collapse;
           display: flex;
           flex-direction: column;
           border-style: solid;
           width: 100%;
-          // &:hover {
-          //   transform: rotate(360deg);
-          //   transition: 2s
-          // }
           tr{
             display: flex;
+            background-color: #4a4c52;
+            color: #EDE7E3;
             justify-content: space-between;
             width: 100%;
           }
 
           thead > tr > th{
-            // background-color: #F7F4F3;
             border: solid black 1px;
+            background-color: #4a4c52;
+            color: #EDE7E3;
             overflow-x: hidden;
             min-width: 100px;
             width: 100%;
           }
           td {
-            // background-color: #F7F4F3;
             border: solid black 1px;
+            background-color: #4a4c52;
+            color: #EDE7E3;
             overflow-x: hidden;
             overflow-y: hidden;
             min-width: 100px;
@@ -197,8 +193,10 @@ body {
               font-size: larger;
               .multiSelect{
                 justify-content: flex-start;
+                margin: 2px !important;
                 div{
                   justify-content: flex-start;
+                  margin: 2px !important;
                 }
               }
               .tableDropdown{
@@ -223,6 +221,12 @@ body {
               }
             }
           }
+        }
+        .queryCommand{
+          background-color: #5a5858;
+          color: #EDE7E3;
+          border-radius: 10px;
+          margin: 10px;
         }
       }
     }

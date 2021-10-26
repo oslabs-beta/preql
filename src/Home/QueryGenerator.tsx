@@ -7,7 +7,7 @@ import Warning from './Warning';
 
 function QueryGenerator(props: any) {
 
-  const { queryCommand, setQueryCommand, setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
+  const { setQueryCommand, setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
 
   const [tableTargets, setTableTargets] = useState<number[]>([-1, -1]);
@@ -31,25 +31,31 @@ function QueryGenerator(props: any) {
   }
 
   function filterSelectBarElements () {
-    let { value } = selectBarElements.current.props
-    const { setValue } = selectBarElements.current
+    let { value } = selectBarElements.current.props;
+    const { setValue } = selectBarElements.current;
 
     function helper(string: string) {
-      const tableOneRegex = (tables[0] !== '') ? new RegExp(`^${tables[0]}[\.]`) : new RegExp(/^(?![\s\S])/g)
-      const tableTwoRegex = (tables[1] !== '') ? new RegExp(`^${tables[1]}[\.]`) : new RegExp(/^(?![\s\S])/g)
+      const tableOneRegex = (tables[0] !== '') ? new RegExp(`^${tables[0]}[\.]`) : new RegExp(/^(?![\s\S])/g);
+      const tableTwoRegex = (tables[1] !== '') ? new RegExp(`^${tables[1]}[\.]`) : new RegExp(/^(?![\s\S])/g);
 
-      if (tableOneRegex && (tableOneRegex.test(string))) return true
-      else if (tableTwoRegex && (tableTwoRegex.test(string))) return true
-      else return false
+      if (tableOneRegex && (tableOneRegex.test(string))) return true;
+      else if (tableTwoRegex && (tableTwoRegex.test(string))) return true;
+      else return false;
     }
 
     if (value) {
       const result = value.filter((obj: selectionType) =>
         helper(obj.value)
       )
-      setValue(result)
-      setSelectionField(result)
-      return value
+      setValue(result);
+      const array = [];
+      for (let i = 0; i < result.length; i++) {
+        const str: string = result[i]["label"];
+        array.push(str)
+      }
+      setSelectionField(array);
+      console.log("res: ", array);
+      return value;
     }
   }
 
@@ -69,8 +75,8 @@ function QueryGenerator(props: any) {
       .then(data => {
         // set state for the table below the query generator
         setQueryTable(data.table);
-        // setQueryCommand(data.query);
-        console.log(data.query);
+        setQueryCommand(data.query);
+        // console.log(data.query);
       })
       .catch((err) => {
         console.log('Error:', err);
@@ -150,7 +156,6 @@ function QueryGenerator(props: any) {
   useEffect(()=>{
     setGenerateSearchField(true);
   }, [generateSearchField])
-
   return (
     <div className="queryContainer">
         <SelectButtons
@@ -165,7 +170,8 @@ function QueryGenerator(props: any) {
         <div className="tableButtons">
           <label htmlFor="">SELECT</label>
           <div className="multiSelect">
-            <Select isMulti options={listOfOptions} ref={selectBarElements} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
+            <Select 
+            closeMenuOnSelect={false} isMulti options={listOfOptions} ref={selectBarElements} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
               const selectConditions = [];
               for (let i = 0; i < ev.length; i++) {
                 selectConditions.push(ev[i]['value']);
@@ -211,7 +217,6 @@ function QueryGenerator(props: any) {
             }
             queryDFRequest(reqBody)
           }}>Show Join Table</button>
-          <h2 className="queryCommand">{queryCommand}</h2>
         </div>
       </div>
     </div>
