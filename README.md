@@ -14,7 +14,7 @@
 <h2 id='about'>What is PreQL?</h2>
 <p>PreQL is an interactive PostgreSQL visualization tool that provides developers with the ability to easily visualize their databases with cached, queryless requests to the backend and automatically generate SQL queries.</p>
 
-<h2 id='installation'>Installation</h>
+<h2 id='installation'>Installation</h2>
 <p>Depending on your operating system, download for MacOS or Windows</p>
 <p>Once downloaded, navigate to the application and double-click to install</p>
 
