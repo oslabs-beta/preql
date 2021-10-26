@@ -20,7 +20,8 @@
 
 <h2 id='howto'>How to use PreQL</h2>
   <ol>
-    <li>Post your PostgreSQL database link and click 'Generate' to view your data.</li>
+    <li>Copy / paste your PostgreSQL database link and click 'Generate' to view your data.</li>
+    <img src='/src/pictures/preQL1.gif' />
     <li>Placeholder</li>
     <li>Placeholder</li>
     <li>Placeholder</li>
