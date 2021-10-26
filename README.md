@@ -3,7 +3,7 @@
 <img src='/src/pictures/logo-cropped.png' />
 </p>
 
-<h1>Table of Contents</h1>
+<h2>Table of Contents</h2>
 <ul>
   <li><a href='#about'>What is PreQL?</a></li>
   <li><a href='#installation'>Installation</a></li>
