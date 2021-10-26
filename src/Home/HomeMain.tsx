@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Component, FC} from 'react';
-import InputRows from './InputRows';
 import Tables from './Tables';
 import TableSelector from './TableSelector';
 import QueryGenerator from './QueryGenerator';
+import UserInput from './UserInput'
 
 
 function Home() {
@@ -27,7 +27,6 @@ function Home() {
       body: JSON.stringify({ link: link })
     })
       .then(function(response) {
-          // console.log(response.status); // Will show you the status
           if (!response.ok) {
               throw new Error("HTTP status " + response.status);
           }
@@ -46,11 +45,10 @@ function Home() {
 
   let fieldsArray = [];
   for (let i = 0; i < fields.length; i++) {
-    fieldsArray.push(<InputRows fields={fields[i]} key={i} textField={textField} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
+    fieldsArray.push(<UserInput fields={fields[i]} key={i} setTextField={setTextField} makeDBRequest={makeDBRequest}/>)
   }
 
   function changeDataRender(visualizer: boolean, value: number, value2: number) {
-    console.log(queryDisplayData)
     //hello! this ternary is kinda confusing. its bascially saying that it if its not the visualizer table,
     // then change the other table instead, then check if they values are the same
     // if they are, then just print it once
@@ -63,7 +61,7 @@ function Home() {
   if (!dataSet) {
     return( //replaces "render"
       <div className="homeContainer">
-        <h1>"We love merge conflicts" - The clinically insane</h1>
+        <h1>Please insert your PostgreSQL database link.</h1>
         {fieldsArray}
       </div>
     )
@@ -72,7 +70,7 @@ function Home() {
       // we have two tables: one carries the visualizer state, the other is for the query state
       // if you look inside their boxes you will notice the small difference. so don't be confused by the naming :)
       <div className="homeContainer">
-        <h1>"If the solution has to be N^2, do it in style" - CT</h1>
+        <h1>Table Visualizer</h1>
         {/* {dataObjects} */}
         <TableSelector
           changeDataRender={changeDataRender}
@@ -87,6 +85,8 @@ function Home() {
           displayData={visualizerData}
           setVisualizerData={setVisualizerData}
         />
+        <h1>Join Visualizer and Query Generator</h1>
+        <h3>Tables:</h3>
         <QueryGenerator
           tableNames={tableNames} //tableNames is a useState - {tableNames} will invoke the func(invokes state)
           changeDataRender={changeDataRender}

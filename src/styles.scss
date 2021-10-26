@@ -1,16 +1,18 @@
 $triangle: url('./pictures/triangles.jpg');
 
 body {
+  font-family: monospace;
   width: 100%;
   height: 100%;
   //postgres://zhocexop:Ipv9EKas6bU6z9ehDXZQRorjITIXijGv@ziggy.db.elephantsql.com:5432/zhocexop
   // background-color: #EDE7E3;
   margin: 0px;
-  background-image: $triangle;
+  background-color: #35363a;
+  // background-image: $triangle;
 
-  #app {
-    background-image: $triangle;
-  }
+  // #app {
+  //   background-image: $triangle;
+  // }
 
   ::-webkit-scrollbar {
     height: 7px;
@@ -33,7 +35,7 @@ body {
     color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     .links {
 
@@ -41,40 +43,44 @@ body {
         font-family: 'Walter';
         text-decoration: none;
         color: white;
-        margin: 10px 50px 10px 10px;
+        margin: 10px 10px 10px 10px;
       }
     }
 
     .logo {
-      max-width: 150px;
-      margin: 10px 10px 10px 50px
+      margin: 10px;
     }
   }
   .routes{
-    width: 60%;
+    width: 70%;
     align-content: center;
     margin: auto;
     .homeContainer{
       //border: 2px solid rgba(94,23,235,255);
-      h1{
+      h1, h3, label{
+        color: grey;
         text-align: center;
       }
-      .InputRows {
+      h3{
+        margin: 0px;
+      }
+      .UserInput {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         text-align: center;
-        .UserInput {
-          display: flex;
-          flex-direction: column;
+        flex-direction: column;
+        .URIinput {
+          border: 2px solid rgba(94,23,235,255);
+          border-radius: 5px;
         }
       }
       .tableSelector {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border: 2px solid gray;
-        border-radius: 4px;
+        border: 2px solid rgba(94,23,235,255);
+        border-radius: 5px;
         margin-bottom: 15px;
         overflow-x: auto;
         .tableButtonSelectors {
@@ -102,16 +108,27 @@ body {
         }
       }
       .container {
+        //border: 2px solid rgba(94,23,235,255)
+        border-radius: 5px;
         display: flex;
         overflow-x: scroll;
         overflow-y: scroll;
         max-height: 400px;
         margin-bottom: 50px;
         table {
+          background-color: #35363a;
+          color: #EDE7E3;
+          border: 1px solid rgba(94,23,235,255);
+          border-radius: 15px;
+          border-collapse: collapse;
           display: flex;
           flex-direction: column;
           border-style: solid;
           width: 100%;
+          // &:hover {
+          //   transform: rotate(360deg);
+          //   transition: 2s
+          // }
           tr{
             display: flex;
             justify-content: space-between;
@@ -119,14 +136,14 @@ body {
           }
 
           thead > tr > th{
-            background-color: #F7F4F3;
+            // background-color: #F7F4F3;
             border: solid black 1px;
             overflow-x: hidden;
             min-width: 100px;
             width: 100%;
           }
           td {
-            background-color: #F7F4F3;
+            // background-color: #F7F4F3;
             border: solid black 1px;
             overflow-x: hidden;
             overflow-y: hidden;
@@ -168,6 +185,7 @@ body {
             justify-content: center;
             font-size: larger;
             color: red;
+            min-height: 25px;
           }
           .queryGenerator{
             flex-wrap: wrap;
@@ -184,6 +202,8 @@ body {
                 }
               }
               .tableDropdown{
+                // background-color: #8F8F8F;
+                // color: black;
                 border: 2px solid rgba(94,23,235,255);
                 border-radius: 4px;
                 margin: 0px 15px;

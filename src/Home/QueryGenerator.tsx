@@ -2,12 +2,12 @@ import { join } from 'path/posix';
 import React, {useLayoutEffect, useState, FC, useRef, useEffect } from 'react';
 import ReactDOM from'react-dom'
 import Select from 'react-select';
-import SelectButton from './SelectButtons';
+import SelectButtons from './SelectButtons';
 import Warning from './Warning';
 
 function QueryGenerator(props: any) {
 
-  const { setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
+  const { queryCommand, setQueryCommand, setQueryTable, queryDataSet, tableNames, changeDataRender, setQueryDataSet } = props;
 
 
   const [tableTargets, setTableTargets] = useState<number[]>([-1, -1]);
@@ -22,6 +22,36 @@ function QueryGenerator(props: any) {
 
   const [joinCondition, setJoinCondition] = useState<string>('INNER');
   let onCondition = [searchField[0][listIndex[0]], searchField[1][listIndex[1]]]
+
+  const selectBarElements = useRef(null);
+
+  interface selectionType {
+    value: string,
+    label: string
+  }
+
+  function filterSelectBarElements () {
+    let { value } = selectBarElements.current.props
+    const { setValue } = selectBarElements.current
+
+    function helper(string: string) {
+      const tableOneRegex = (tables[0] !== '') ? new RegExp(`^${tables[0]}[\.]`) : new RegExp(/^(?![\s\S])/g)
+      const tableTwoRegex = (tables[1] !== '') ? new RegExp(`^${tables[1]}[\.]`) : new RegExp(/^(?![\s\S])/g)
+
+      if (tableOneRegex && (tableOneRegex.test(string))) return true
+      else if (tableTwoRegex && (tableTwoRegex.test(string))) return true
+      else return false
+    }
+
+    if (value) {
+      const result = value.filter((obj: selectionType) =>
+        helper(obj.value)
+      )
+      setValue(result)
+      setSelectionField(result)
+      return value
+    }
+  }
 
   // do we need to move this fetch request to another component?
   function queryDFRequest(query: databaseConnection) {
@@ -39,6 +69,7 @@ function QueryGenerator(props: any) {
       .then(data => {
         // set state for the table below the query generator
         setQueryTable(data.table);
+        // setQueryCommand(data.query);
         console.log(data.query);
       })
       .catch((err) => {
@@ -46,6 +77,39 @@ function QueryGenerator(props: any) {
 
       })
   };
+
+  function selectionChoicesFunction(ev: any, num: number){
+    const nameOfTable = ev.target.value;
+    const index = ev.target.selectedIndex;
+    //the table we create is always one length longer than the one we are comparing too
+    // so we minus one on lines 22 and 24
+    tableTargets[num] = index - 1;
+    setTableTargets(tableTargets);
+    tables[num] = nameOfTable
+    setTables(tables)
+
+    if (tableTargets[0] !== null && tableTargets[1] !== null && tableTargets[0] !== tableTargets[1]) {
+      setWarning(false)
+    }
+    else setWarning(true)
+
+    const dataFromTable = queryDataSet[index - 1];
+    searchFieldsChanger(nameOfTable, dataFromTable, num);
+    setGenerateSearchField(false);
+  }
+
+  function searchFieldsChanger(nameOfTable: string, dataFromTable: object[], index: number) {
+    const array: string[] = []
+    if (dataFromTable !== undefined) {
+      for (const key in dataFromTable[0]) {
+        const str: string = nameOfTable + '.' + key;
+        array.push(str)
+      }
+    }
+    searchField[index] = array;
+    setSearchField(searchField);
+  }
+
 
   type arrayOfArrays = [string[], string[]] // will have strings within those arrays
   type stringArray = [string, string]
@@ -89,26 +153,23 @@ function QueryGenerator(props: any) {
 
   return (
     <div className="queryContainer">
-        <SelectButton
+        <SelectButtons
         tableNames={tableNames}
         tables={tables}
-        tableTargets={tableTargets}
-        setTables={setTables}
-        setTableTargets={setTableTargets}
-        queryDataSet={queryDataSet}
-        setSearchField={setSearchField}
-        searchField={searchField}
-        setGenerateSearchField={setGenerateSearchField}
-        setWarning={setWarning}
+        selectionChoicesFunction={selectionChoicesFunction}
+        filterSelectBarElements={filterSelectBarElements}
+        setQueryCommand = {setQueryCommand}
         />
       <Warning warning={warning} className="warning" />
       <div className="queryGenerator">
         <div className="tableButtons">
           <label htmlFor="">SELECT</label>
           <div className="multiSelect">
-            <Select isMulti options={listOfOptions} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
+            <Select isMulti options={listOfOptions} ref={selectBarElements} placeholder="Leave empty for select ALL (*)" onChange={(ev) => {
               const selectConditions = [];
-              for (let i = 0; i < ev.length; i++) selectConditions.push(ev[i]['value']);
+              for (let i = 0; i < ev.length; i++) {
+                selectConditions.push(ev[i]['value']);
+              }
               setSelectionField(selectConditions)
           }}/>
           </div>
@@ -122,14 +183,13 @@ function QueryGenerator(props: any) {
           </select>
           <label htmlFor="">JOIN {tableNames[tableTargets[1]]} ON</label>
           <select className="tableDropdown" onChange={(ev) => {
-            setListIndex([ev.target.selectedIndex, listIndex[1]]);
-            // console.log(ev.target.selectedIndex)
+            if (!warning) setListIndex([ev.target.selectedIndex, listIndex[1]]);
           }}>
             {onOptions[0]}
           </select>
           <label htmlFor=""> = </label>
           <select className="tableDropdown" onChange={(ev) => {
-            setListIndex([listIndex[0], ev.target.selectedIndex]);
+            if (!warning) setListIndex([listIndex[0], ev.target.selectedIndex]);
           }}>
             {onOptions[1]}
           </select>
@@ -149,13 +209,11 @@ function QueryGenerator(props: any) {
               //array of strings of length 2
               tableNames: [tableNames[tableTargets[0]], tableNames[tableTargets[1]]]
             }
-            console.log(reqBody)
             queryDFRequest(reqBody)
-          }}>Generate</button>
+          }}>Show Join Table</button>
+          <h2 className="queryCommand">{queryCommand}</h2>
         </div>
       </div>
-        {/* : null
-      } */}
     </div>
   )
 }

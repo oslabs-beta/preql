@@ -61,7 +61,6 @@ controller.getJoinTable = async (req, res, next) => {
     const tableNames = req.body.query.tableNames;
     const columnNames = [];
     const qureynames = [];
-    console.log(on)
     try{
         
         for (let i = 0; i < tableNames.length; i++){
@@ -87,7 +86,6 @@ controller.getJoinTable = async (req, res, next) => {
         for (let i = 0; i < columnNames.length; i++){
             columnNames[i] = [...columnNames[i], 'merge'];
         }
-        console.log("1")
         dfOne = dfOne.restructure(columnNames[0])
         dfTwo = dfTwo.restructure(columnNames[1])
         dfOne = dfOne.map(row => row.set('merge', row.get(`${on[0]}`))).cast('merge', String);
