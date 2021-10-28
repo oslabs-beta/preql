@@ -17,6 +17,11 @@
 <h2 id='installation'>Installation</h2>
 <p>Depending on your operating system, download for MacOS or Windows.</p>
 <p>Once downloaded, navigate to the application and double-click to install.</p>
+<p>MacOS Users: You may need to adjust your security settings to allow the application to run.</p>
+<p>If you encounter the error below when running the application:</p>
+<img src='/src/pictures/errormessage.png' />
+<p>Go to your security settings and click 'Open Anyway'. You should now be able to use the application as intended.</p>
+<img src='/src/pictures/securitysettings.png' />
 
 <h2 id='howto'>How to use PreQL</h2>
   <ol>
