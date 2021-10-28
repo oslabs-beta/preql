@@ -1,6 +1,6 @@
 # PreQL
 <p align='center'>
-<img src='/src/pictures/logo-cropped.png' />
+<img src='/src/pictures/preql-website.png' />
 </p>
 
 <h2>Table of Contents</h2>
