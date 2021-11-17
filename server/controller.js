@@ -80,8 +80,8 @@ controller.getJoinTable = async (req, res, next) => {
         
         for (let i = 0; i < columnNames.length; i++){
             columnNames[i] = [...columnNames[i], 'merge'];
-        }
-        console.log("on ", on)
+        };
+        console.log("on ", on);
         dfOne = dfOne.restructure(columnNames[0])
         dfTwo = dfTwo.restructure(columnNames[1])
         dfOne = dfOne.map(row => row.set('merge', row.get(`${on[0]}`))).cast('merge', String);
