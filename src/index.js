@@ -6,7 +6,7 @@ import App from './App'
 import styles from './styles.scss'
 //import triangles from './pictures/triangles.jpg'
 
-
+// testing
 
 render(
   <div>
